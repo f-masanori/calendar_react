@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 function App() {
   return (
     <Router>
-      <Route exact path="/login" component={Login} />
+      {/* <Route exact path="/login" component={Login} /> */}
     {/* <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
