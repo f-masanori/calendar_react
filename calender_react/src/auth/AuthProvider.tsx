@@ -41,9 +41,9 @@ export const AuthContext = React.createContext(AuthVal);
 
 export const AuthProvider: React.FC = () => {
   const [currentUser, setCurrentUser] = useState(null);
-   // useEffect(() => {
-    //     app.auth().onAuthStateChanged(setCurrentUser);
-    // }, []);
+  //  useEffect(() => {
+  //       app.auth().onAuthStateChanged(setCurrentUser);
+  //   }, []);
   return (
     <AuthContext.Provider value={AuthVal}>
       

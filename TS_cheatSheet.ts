@@ -33,3 +33,30 @@ Contextを作成する
 Providerに受け渡したい値をセットして定義する
 Consumerを定義して値を受け取り処理をする
 */
+
+/* 三項演算子 ifの省略形 */
+function getFee(isMember) {
+  return (isMember ? '$2.00' : '$10.00');
+}
+console.log(getFee(true));
+// expected output: "$2.00"
+console.log(getFee(false));
+// expected output: "$10.00"
+console.log(getFee(1));
+// expected output: "$2.00"
+
+/* Partialの説明 */
+interface Foo {
+  bar: number
+  baz: boolean
+}
+type Partial<T>
+type PartialFoo = Partial<Foo>
+
+// PartialFoo {
+//   bar?: number
+//   baz?: boolean
+// }
+//型 T のすべてのプロパティを省略可能(つまり| undefined)にした新しい型を返すMapped Type です。
+
+...の意味を調べる

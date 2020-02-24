@@ -2,12 +2,18 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
+import Login from "./auth/Login";
+// import SignUp from "./auth/SignUp";
 function App() {
   return (
-    <Router>
-      {/* <Route exact path="/login" component={Login} /> */}
-    {/* <div className="App">
+      <Router>
+        <div>
+          {/* <PrivateRoute exact path="/" component={Home} /> */}
+          <Route exact path="/login" component={Login} />
+          {/* <Route exact path="/signup" component={SignUp} /> */}
+        </div>
+      </Router>
+    /* <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -22,8 +28,7 @@ function App() {
           Learn React
         </a>
       </header>
-      </div> */}
-      </Router>
+      </div> */
   );
 }
 
