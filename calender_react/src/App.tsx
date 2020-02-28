@@ -3,14 +3,15 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "./auth/Login";
-// import SignUp from "./auth/SignUp";
+import Signup from "./auth/Signup";
+
 function App() {
   return (
       <Router>
         <div>
           {/* <PrivateRoute exact path="/" component={Home} /> */}
           <Route exact path="/login" component={Login} />
-          {/* <Route exact path="/signup" component={SignUp} /> */}
+          <Route exact path="/signup" component={Signup} />
         </div>
       </Router>
     /* <div className="App">
