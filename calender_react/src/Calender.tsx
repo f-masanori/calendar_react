@@ -9,10 +9,10 @@ const Login = (history:any ):JSX.Element => {
 //     const { email, password } = event.target.elements;
 //     login(email.value, password.value, history);
 //   };
-//   const clickSignout = () => {
-//     console.log(55)
-//       signout(history)
-//   }
+  const clickSignout = () => {
+    console.log("サインアウト")
+      signout(history.history)
+  }
   return (
     <div>
       <h1>カレンダー</h1>
@@ -29,7 +29,7 @@ const Login = (history:any ):JSX.Element => {
       </form> */}
       <div>
         Home
-    {/* <button onClick={() => clickSignout()}>sign out</button> */}
+    <button onClick={() => clickSignout()}>sign out</button>
       </div>
     </div>
   );

@@ -7,11 +7,11 @@ const Login = (history :any) :JSX.Element=> {
   const handleSubmit = (event:any) => {
     event.preventDefault();
     const { email, password } = event.target.elements;
-    login(email.value, password.value, history);
+    login(email.value, password.value, history.history);
   };
   const clickSignout = () => {
     console.log("サインアウト")
-    signout(history)
+    signout(history.history)
   }
   return (
     <div>

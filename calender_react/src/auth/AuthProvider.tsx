@@ -1,12 +1,7 @@
-import * as history from 'history';
 import React, {useEffect, useState} from 'react';
 import {withRouter} from 'react-router';
-import {app} from '../base.js';
+import {app} from '../base';
 
-
-interface Props {
-  children:any
-}
 interface IAuthContext {
   login: (email: string, password: string, history: any) => any;
   signup: (email: string, password: string, history: any) => void;
@@ -43,11 +38,11 @@ const AuthVal: IAuthContext = {
   },
   uid: undefined
 }
-// contextの作成
+
 export const AuthContext = React.createContext(AuthVal);
 
 
-export const AuthProvider: React.FC<Props> = (children) => {
+export const AuthProvider: React.FC = (children) => {
   const [currentUser, setCurrentUser] = useState(null);
    useEffect(() => {
      app.auth().onAuthStateChanged(user => {
@@ -68,7 +63,7 @@ export const AuthProvider: React.FC<Props> = (children) => {
     </AuthContext.Provider>
   )
 }
-
+export default withRouter(AuthProvider);
 // export const AuthProvider: React.FC=() => {
     // const [currentUser, setCurrentUser] = useState(null);
 
