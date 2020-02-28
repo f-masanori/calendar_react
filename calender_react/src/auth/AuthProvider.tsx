@@ -1,28 +1,26 @@
 import * as history from 'history';
 import React, {useEffect, useState} from 'react';
 import {withRouter} from 'react-router';
-
+// import History from '../history';
 import {app} from '../base.js';
 
 
-interface Ilogin {
-    (email: string, password: string, history: string): void;
-}
-interface Isignup {
-  (email: string, password: string, history: string): void;
+interface Props {
+  children:any
 }
 interface IAuthContext {
-    // login: Ilogin;
-    // signup: Isignup;
-    login: (email: string, password: string, history: any) => any;
-    signup?: (email: string, password: string, history: any) => void;
+  login: (email: string, password: string, history: any) => any;
+  signup: (email: string, password: string, history: any) => void;
+  signout: (history: any) => void;
+  uid: string | undefined;
 }
+
 const AuthVal: IAuthContext = {
   login: async (email: string, password: string, history: any) => {
     try {
       await app.auth().signInWithEmailAndPassword(email, password);
-      history.push('/');
-
+      history.push('/calender');
+      alert("カレンダーへ")
     } catch (error) {
       alert(error);
     }
@@ -34,19 +32,40 @@ const AuthVal: IAuthContext = {
     } catch (error) {
       alert(error);
     }
-  }
+  },
+  signout: async (history: any) => {
+    try {
+      await app.auth().signOut();
+      history.push('/');
+    } catch (error) {
+      alert(error);
+    }
+   
+  },
+  uid: undefined
 }
 // contextの作成
 export const AuthContext = React.createContext(AuthVal);
 
-export const AuthProvider: React.FC = () => {
+
+export const AuthProvider: React.FC<Props> = (children) => {
   const [currentUser, setCurrentUser] = useState(null);
-  //  useEffect(() => {
-  //       app.auth().onAuthStateChanged(setCurrentUser);
-  //   }, []);
+   useEffect(() => {
+     app.auth().onAuthStateChanged(user => {
+       if (user) {
+         const user = app.auth().currentUser;
+         console.log("uid="+user?.uid)
+         console.log(children)
+         AuthVal.uid = user?.uid
+       } else {
+         console.log("ログインしてません")
+         AuthVal.uid = undefined
+       }
+     });
+    }, []);
   return (
     <AuthContext.Provider value={AuthVal}>
-      
+      {children.children}
     </AuthContext.Provider>
   )
 }

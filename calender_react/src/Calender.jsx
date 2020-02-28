@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { withRouter } from "react-router";
-import { AuthContext } from "./AuthProvider";
+import { AuthContext } from "./auth/AuthProvider";
 
 const Login = ({ history }) => {
   const { login,signout } = useContext(AuthContext);
@@ -12,12 +12,12 @@ const Login = ({ history }) => {
     login(email.value, password.value, history);
   };
   const clickSignout = () => {
-    console.log("サインアウト")
-    signout(history)
+    console.log(55)
+      signout(history)
   }
   return (
     <div>
-      <h1>Log in</h1>
+      <h1>カレンダー</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Email
