@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import { withRouter } from "react-router";
 import { AuthContext } from "./auth/AuthProvider";
 
-const Root = ({ history }) => {
+const Root = (history :any) => {
   const { signup } = useContext(AuthContext);
   // AuthContextからsignup関数を受け取る
-  const handleSubmit = event => {
-    event.preventDefault();
-    const { email, password } = event.target.elements;
-    signup(email.value, password.value, history);
-  };
+  // const handleSubmit = event => {
+  //   event.preventDefault();
+  //   const { email, password } = event.target.elements;
+  //   signup(email.value, password.value, history);
+  // };
 
   return (
     <div>

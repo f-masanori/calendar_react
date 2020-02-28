@@ -1,23 +1,21 @@
 import React, { useContext } from "react";
 import { withRouter } from "react-router";
-import { AuthContext } from "./auth/AuthProvider";
+import { AuthContext } from "./AuthProvider";
 
-const Login = ({ history }) => {
+const Login = (history :any) :JSX.Element=> {
   const { login,signout } = useContext(AuthContext);
-
-  // AuthContextからlogin関数を受け取る
-  const handleSubmit = event => {
+  const handleSubmit = (event:any) => {
     event.preventDefault();
     const { email, password } = event.target.elements;
     login(email.value, password.value, history);
   };
   const clickSignout = () => {
-    console.log(55)
-      signout(history)
+    console.log("サインアウト")
+    signout(history)
   }
   return (
     <div>
-      <h1>カレンダー</h1>
+      <h1>Log in</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Email

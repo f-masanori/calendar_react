@@ -1,7 +1,6 @@
 import * as history from 'history';
 import React, {useEffect, useState} from 'react';
 import {withRouter} from 'react-router';
-// import History from '../history';
 import {app} from '../base.js';
 
 
