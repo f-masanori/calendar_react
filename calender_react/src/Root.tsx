@@ -4,12 +4,7 @@ import { AuthContext } from "./auth/AuthProvider";
 
 const Root = (history :any) => {
   const { signup } = useContext(AuthContext);
-  // AuthContextからsignup関数を受け取る
-  // const handleSubmit = event => {
-  //   event.preventDefault();
-  //   const { email, password } = event.target.elements;
-  //   signup(email.value, password.value, history);
-  // };
+
 
   return (
     <div>

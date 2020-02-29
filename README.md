@@ -29,3 +29,6 @@ services:
 
 ### Dockerコンテナへの入り方
 
+### npm インストール時
+CXX=clang++ npm install　　
+オプションつける
