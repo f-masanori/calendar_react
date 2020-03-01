@@ -10,26 +10,35 @@ interface IAuthContext {
 }
 
 const AuthVal: IAuthContext = {
-  login: async (email: string, password: string, history: any) => {
-    try {
-      await app.auth().signInWithEmailAndPassword(email, password);
+  login: (email: string, password: string, history: any) => {
+    app.auth().signInWithEmailAndPassword(email, password).then(res => {
+      AuthVal.uid = res.user?.uid
+      let UID: any = AuthVal.uid
+      localStorage.setItem('uid', UID);
       history.push('/calender');
+      console.log(res.user?.uid)
       alert("カレンダーへ")
-    } catch (error) {
-      alert(error);
-    }
+      })
+        .catch(error => {
+          alert(error);
+        });;
   },
   signup: async (email: string, password: string, history: any) => {
-    try {
-      await app.auth().createUserWithEmailAndPassword(email, password);
+    app.auth().createUserWithEmailAndPassword(email, password).then(res => {
+      AuthVal.uid = res.user?.uid
+      let UID: any = AuthVal.uid
+      localStorage.setItem('uid', UID);
       history.push('/');
-    } catch (error) {
-      alert(error);
-    }
+      console.log(res.user?.uid)
+    })
+      .catch(error => {
+        alert(error);
+    });
   },
   signout: async (history: any) => {
-    try {
+    try {      
       await app.auth().signOut();
+      localStorage.setItem('uid', "");
       history.push('/');
     } catch (error) {
       alert(error);

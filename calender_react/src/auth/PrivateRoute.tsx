@@ -8,10 +8,15 @@ const PrivateRoute = ({ component: RouteComponent, ...options }: {
   component: any;
 }) => {
   const { uid } = useContext(AuthContext);
-  const Component = uid ? RouteComponent : Login;
-  if (uid) { console.log("ログイン済") }
-  else { console.log("未ログイン")}
-  console.log("private")
+  let Component:any;
+  if (localStorage.getItem('uid') == "") {
+    console.log("未ログイン")
+    Component = Login
+  } else {
+    console.log("ログイン済")
+    Component = RouteComponent
+  }
+
   return <Route {...options} component={Component} />;
 };
 

@@ -6,15 +6,29 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import '@fullcalendar/core/main.css';
 import '@fullcalendar/daygrid/main.css';
 import interactionPlugin from '@fullcalendar/interaction';
+import { app } from './base';
+
 const Calender = (history:any ):JSX.Element => {
-  const { login,signout } = useContext(AuthContext);
+  const { login, signout, uid } = useContext(AuthContext);
   const clickSignout = () => {
     console.log("サインアウト")
+    let UID = localStorage.getItem('uid');
+    alert(UID)
+      app.auth().currentUser?.getIdToken(true).then(function (idToken: any) {
+        // Send token to your backend via HTTPS
+        // ...
+        console.log(idToken)
+      }).catch(function (error: any) {
+        // Handle error
+        alert(error)
+      });
+    
+   
       signout(history.history)
   }
   return (
     <div>
-      <h1>カレンダー</h1>
+      <h1>カレンダー</h1>{uid}
       <FullCalendar defaultView="dayGridMonth" plugins={[dayGridPlugin,interactionPlugin]} events={[
         { title: 'event 1', date: '2020-02-01' },
         { title: 'event 2', date: '2019-04-02' }
