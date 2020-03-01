@@ -17,7 +17,6 @@ const AuthVal: IAuthContext = {
       localStorage.setItem('uid', UID);
       history.push('/calender');
       console.log(res.user?.uid)
-      alert("カレンダーへ")
       })
         .catch(error => {
           alert(error);

@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
 import { AuthProvider } from "./auth/AuthProvider";
-import { BrowserRouter as Router, Route ,Link} from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Header from "./Header";
 import Login from "./auth/Login";
 import Signup from "./auth/Signup";
 import Calender from "./Calender";
@@ -12,10 +13,12 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <Link to="/">Home</Link><div></div>
+        <Header />
+        <p style={{ fontSize: `300%` }}>&nbsp;</p>
+        {/* <Link to="/">Home</Link><div></div>
         <Link to="/login">login</Link><div></div>
         <Link to="/signup">signup</Link><div></div>
-        <Link to="/calender">calender</Link>
+        <Link to="/calender">calender</Link> */}
         <div>
           <Switch>
             <Route exact path="/login" component={Login} />
