@@ -7,11 +7,12 @@ interface IAuthContext {
   signup: (email: string, password: string, history: any) => void;
   signout: (history: any) => void;
   uid: string | undefined;
+  idtoken?: string;
 }
 
 const AuthVal: IAuthContext = {
-  login: (email: string, password: string, history: any) => {
-    app.auth().signInWithEmailAndPassword(email, password).then(res => {
+  login: async (email: string, password: string, history: any) => {
+    await app.auth().signInWithEmailAndPassword(email, password).then(res => {
       AuthVal.uid = res.user?.uid
       let UID: any = AuthVal.uid
       localStorage.setItem('uid', UID);
@@ -57,6 +58,7 @@ export const AuthProvider: React.FC = (children) => {
          console.log("uid="+user?.uid)
          console.log(children)
          AuthVal.uid = user?.uid
+         console.log("ログインしてます")
        } else {
          console.log("ログインしてません")
          AuthVal.uid = undefined

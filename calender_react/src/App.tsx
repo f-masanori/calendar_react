@@ -9,8 +9,12 @@ import Calender from "./Calender";
 import PrivateRoute from "./auth/PrivateRoute";
 import Root from "./Root";
 import { Redirect, Switch } from 'react-router';
+// import { IEventContext, Default } from './EventPovider'
+// export const EventContext = React.createContext(Default);
+
 function App() {
   return (
+    // <EventContext>
     <AuthProvider>
       <Router>
         <Header />
@@ -29,7 +33,8 @@ function App() {
           </Switch>
         </div>
       </Router>
-    </AuthProvider>
+      </AuthProvider>
+    // </EventContext>
   );
 }
 
