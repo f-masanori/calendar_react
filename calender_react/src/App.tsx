@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import { AuthProvider } from "./auth/AuthProvider";
+import { EventProvider } from "./auth/EventProvider";
+
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Header from "./Header";
 import Login from "./auth/Login";
@@ -14,8 +16,8 @@ import { Redirect, Switch } from 'react-router';
 
 function App() {
   return (
-    // <EventContext>
     <AuthProvider>
+      <EventProvider>
       <Router>
         <Header />
         <p style={{ fontSize: `300%` }}>&nbsp;</p>
@@ -33,8 +35,8 @@ function App() {
           </Switch>
         </div>
       </Router>
-      </AuthProvider>
-    // </EventContext>
+      </EventProvider>
+    </AuthProvider>
   );
 }
 
