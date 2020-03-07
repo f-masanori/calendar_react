@@ -5,10 +5,15 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { AuthContext } from "./auth/AuthProvider";
+import { EventContext, IEventContext } from "./auth/EventProvider";
 
 const Header = (history: any) => {
     const { signout } = useContext(AuthContext);
-    const clickSignOut = () => (signout(history.history))
+    const { eventsContext, changeEvents } = useContext(EventContext);
+    const clickSignOut = () => {
+        changeEvents([])
+        signout(history.history)
+    }
 
     let UID: string|null = localStorage.getItem('uid');
     let NavAuthentication: JSX.Element;
@@ -19,18 +24,19 @@ const Header = (history: any) => {
     } else {
         NavAuthentication = (<Nav className="justify-content-end" activeKey="/home">
             <Nav.Item>
+                <Nav.Link >{UID}</Nav.Link>
                 <Nav.Link onClick={clickSignOut}>SignOut</Nav.Link>
             </Nav.Item>          
         </Nav>)
     }
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top" >
-            <Navbar.Brand href="#home">Calendar</Navbar.Brand>
+            <Navbar.Brand><Nav>Calendar</Nav></Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav><Link to="/calender">calender&nbsp;&nbsp;</Link></Nav>
-                    <Nav><Link to="/">Home</Link></Nav>
+                    {/* <Nav><Link to="/calender">calender&nbsp;&nbsp;</Link></Nav> */}
+                    {/* <Nav><Link to="/">Home</Link></Nav> */}
                 </Nav>
                 {NavAuthentication}
             </Navbar.Collapse>

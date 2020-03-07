@@ -14,12 +14,12 @@ const PrivateRoute = ({ component: RouteComponent, ...options }: {
     Component = Login
   } else {
     console.log("ログイン済")
-    app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
-      console.log("useEffecr1")
+    // app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
+    //   // console.log("useEffecr1")
  
-    }).catch((error: any) => {
-      alert(error)
-    });
+    // }).catch((error: any) => {
+    //   alert(error)
+    // });
     Component = RouteComponent
   }
 

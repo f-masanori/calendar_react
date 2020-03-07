@@ -1,7 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { EventContext, IEventContext } from "./EventProvider";
+
 import {withRouter} from 'react-router';
 import {app} from '../base';
-
+import { GetEventsviaAPI} from '../Calender'
 interface IAuthContext {
   login: (email: string, password: string, history: any) => any;
   signup: (email: string, password: string, history: any) => void;
@@ -24,11 +26,11 @@ const AuthVal: IAuthContext = {
         });;
   },
   signup: async (email: string, password: string, history: any) => {
-    app.auth().createUserWithEmailAndPassword(email, password).then(res => {
+   await app.auth().createUserWithEmailAndPassword(email, password).then(res => {
       AuthVal.uid = res.user?.uid
       let UID: any = AuthVal.uid
       localStorage.setItem('uid', UID);
-      history.push('/');
+      history.push('/calender');
       console.log(res.user?.uid)
     })
       .catch(error => {
@@ -39,7 +41,7 @@ const AuthVal: IAuthContext = {
     try {      
       await app.auth().signOut();
       localStorage.setItem('uid', "");
-      history.push('/');
+      history.push('/login');
     } catch (error) {
       alert(error);
     }
@@ -51,20 +53,24 @@ export const AuthContext = React.createContext(AuthVal);
 
 
 export const AuthProvider: React.FC = (children) => {
-   useEffect(() => {
-     app.auth().onAuthStateChanged(user => {
-       if (user) {
-         const user = app.auth().currentUser;
-         console.log("uid="+user?.uid)
-         console.log(children)
-         AuthVal.uid = user?.uid
-         console.log("ログインしてます")
-       } else {
-         console.log("ログインしてません")
-         AuthVal.uid = undefined
-       }
-     });
-    }, []);
+  const { eventsContext, changeEvents } = useContext(EventContext);
+  //  useEffect(() => {
+  //    app.auth().onAuthStateChanged(user => {
+  //      if (user) {
+  //        const user = app.auth().currentUser;
+  //        console.log("uid="+user?.uid)
+  //        console.log(children)
+  //       //  AuthVal.uid = user?.uid
+  //       //  const temp = GetEventsviaAPI()
+  //       //  console.log(temp)
+  //       //  changeEvents(temp)
+  //        console.log("ログインしてます")
+  //      } else {
+  //        console.log("ログインしてません")
+  //        AuthVal.uid = undefined
+  //      }
+  //    });
+  //   }, []);
   return (
     <AuthContext.Provider value={AuthVal}>
       {children.children}
