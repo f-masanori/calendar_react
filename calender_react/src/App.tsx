@@ -30,7 +30,7 @@ function App() {
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
             <PrivateRoute exact path="/calender" component={Calender} />
-            <Route exact path="/" component={Root} />
+              <Route exact path="/" component={Login} />
             {/* <Redirect to="/" />; */}
           </Switch>
         </div>

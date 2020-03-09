@@ -24,7 +24,6 @@ const Header = (history: any) => {
     } else {
         NavAuthentication = (<Nav className="justify-content-end" activeKey="/home">
             <Nav.Item>
-                <Nav.Link >{UID}</Nav.Link>
                 <Nav.Link onClick={clickSignOut}>SignOut</Nav.Link>
             </Nav.Item>          
         </Nav>)

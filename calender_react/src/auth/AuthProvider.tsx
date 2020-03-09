@@ -3,7 +3,6 @@ import { EventContext, IEventContext } from "./EventProvider";
 
 import {withRouter} from 'react-router';
 import {app} from '../base';
-import { GetEventsviaAPI} from '../Calender'
 interface IAuthContext {
   login: (email: string, password: string, history: any) => any;
   signup: (email: string, password: string, history: any) => void;
@@ -42,6 +41,7 @@ const AuthVal: IAuthContext = {
       await app.auth().signOut();
       localStorage.setItem('uid', "");
       history.push('/login');
+      window.location.reload()
     } catch (error) {
       alert(error);
     }
@@ -61,7 +61,7 @@ export const AuthProvider: React.FC = (children) => {
   //        console.log("uid="+user?.uid)
   //        console.log(children)
   //       //  AuthVal.uid = user?.uid
-  //       //  const temp = GetEventsviaAPI()
+  //       //  const temp = GetEventsbyAPI()
   //       //  console.log(temp)
   //       //  changeEvents(temp)
   //        console.log("ログインしてます")

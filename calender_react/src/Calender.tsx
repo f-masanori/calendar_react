@@ -18,42 +18,11 @@ import APIURL from './Config'
 /* Bootstrap */
 import Container from 'react-bootstrap/Container'
 
-export const GetEventsviaAPI = (): IEventContext[] => {
-  console.log("GetEventsviaAPI")
-  let newEvents: IEventContext[] = []
-  app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
-    const res = await axios({
-      method: 'get',
-      url: APIURL + '/getEventsByUID',
-      headers: {
-        'Content-Type': "application/json",
-        'Authorization': idToken
-      },
-    });
-    console.log("await axios")
-
-    for (let i = 0; i < res.data.length; i++) {
-      let temp: IEventContext = {
-        title: res.data[i].Event,
-        date: res.data[i].Date
-      }
-      newEvents.push(temp)
-
-    }
-    console.log(newEvents)
-
-  }).catch((error: any) => {
-    alert(error)
-  });
-  return (newEvents)
-}
 
 const Calender = (history: any): JSX.Element => {
-  // let plugins: any = [dayGridPlugin]
   const [calendarPlugins, setCalendarPlugins] = React.useState([dayGridPlugin, interactionPlugin])
   const { eventsContext, changeEvents } = useContext(EventContext);
   let calendarRef: any = React.createRef()
-
   const GetEventByAPI = () => {
 
     console.log("GetEventByAP!!")
@@ -67,13 +36,14 @@ const Calender = (history: any): JSX.Element => {
         },
       });
       let newEvents: IEventContext[] = []
-      // if
-      for (let i = 0; i < res.data.length; i++) {
-        let temp: IEventContext= {
-         title: res.data[i].Event,
-         date: res.data[i].Date
+      if (res.data) {
+        for (let i = 0; i < res.data.length; i++) {
+          let temp: IEventContext = {
+            title: res.data[i].Event,
+            date: res.data[i].Date
+          }
+          newEvents.push(temp)
         }
-        newEvents.push(temp)
       }
       changeEvents(newEvents)
       setCalendarPlugins([dayGridPlugin, interactionPlugin])
@@ -84,51 +54,17 @@ const Calender = (history: any): JSX.Element => {
 
   useEffect(() => {
     console.log("useEffect start")
-    var user = app.auth().currentUser;
-
-    if (user) {
-      console.log("uid=" + user?.uid)
+      app.auth().onAuthStateChanged(user => {
+       if (user) {
+         const user = app.auth().currentUser;
+         console.log("uid="+user?.uid)
+         GetEventByAPI()
          console.log("ログインしてます")
-         GetEventByAPI();
-    } else {
-      console.log("ログインしてません")
-      // No user is signed in.
-    }
-      // app.auth().onAuthStateChanged(user => {
-      //  if (user) {
-      //    console.log("uid="+user?.uid)
-      //    console.log("ログインしてます")
-      //    GetEventByAPI();
-      //  } else {
-      //    console.log("ログインしてません")
-      //  }
-      // });
-    // app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
-    //   const res = await axios({
-    //     method: 'get',
-    //     url: APIURL + '/getEventsByUID',
-    //     headers: {
-    //       'Content-Type': "application/json",
-    //       'Authorization': idToken
-    //     },
-    //   });
-    //   let newEvents: IEventContext[] = []
-    //   for (let i = 0; i < res.data.length; i++) {
-    //     let temp: IEventContext = {
-    //       title: res.data[i].Event,
-    //       date: res.data[i].Date
-    //     }
-    //     newEvents.push(temp)
-    //   }
-    //   changeEvents(newEvents)
-    //   setCalendarPlugins([dayGridPlugin, interactionPlugin])
-    // }).catch((error: any) => {
-    //   alert(error)
-    // });
+       } else {
+         console.log("ログインしてません")
+       }
+     });
     console.log("useEffect end")
-
-    // window.setTimeout(GetEventByAPI, 10)
-    // GetEventByAPI();
   }, []);
 
   const addEvent = (props: any) => {

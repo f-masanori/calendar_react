@@ -16,7 +16,7 @@ const defaulEvent: IEventContext[] = [
    
 export const EventContext = React.createContext({
     eventsContext: defaulEvent,
-    changeEvents: (ss:any) =>{}
+    changeEvents: (mock:any) =>{}
 });
 
 
