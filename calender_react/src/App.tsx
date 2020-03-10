@@ -3,7 +3,7 @@ import './App.css';
 import { AuthProvider } from "./auth/AuthProvider";
 import { EventProvider } from "./auth/EventProvider";
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Route, Link } from "react-router-dom";
 import Header from "./Header";
 import Login from "./auth/Login";
 import Signup from "./auth/Signup";
