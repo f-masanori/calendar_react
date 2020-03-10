@@ -1,5 +1,29 @@
-/calender_react/node_modules/
-/calender_react/package-lock.json
-/calender_react/yarn.lock
-/calender_react/.env
-/calender_react/build
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# custom
+/.env
+/node_modules/
+/package-lock.json
+/yarn.lock

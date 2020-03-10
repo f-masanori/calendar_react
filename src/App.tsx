@@ -7,7 +7,7 @@ import { HashRouter as Router, Route, Link } from "react-router-dom";
 import Header from "./Header";
 import Login from "./auth/Login";
 import Signup from "./auth/Signup";
-import Calender from "./Calender";
+import Calender from "./Calendar";
 import PrivateRoute from "./auth/PrivateRoute";
 import Root from "./Root";
 import { Redirect, Switch } from 'react-router';
