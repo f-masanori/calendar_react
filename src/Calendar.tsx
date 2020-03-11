@@ -23,8 +23,8 @@ const Calender = (history: any): JSX.Element => {
   const [calendarPlugins, setCalendarPlugins] = React.useState([dayGridPlugin, interactionPlugin])
   const { eventsContext, changeEvents } = useContext(EventContext);
   let calendarRef: any = React.createRef()
-  const GetEventByAPI = () => {
 
+  const GetEventByAPI = () => {
     console.log("GetEventByAP!!")
     app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
       const res = await axios({
@@ -52,20 +52,6 @@ const Calender = (history: any): JSX.Element => {
     });
   }
 
-  useEffect(() => {
-    console.log("useEffect start")
-      app.auth().onAuthStateChanged(user => {
-       if (user) {
-         const user = app.auth().currentUser;
-         console.log("uid="+user?.uid)
-         GetEventByAPI()
-         console.log("ログインしてます")
-       } else {
-         console.log("ログインしてません")
-       }
-     });
-    console.log("useEffect end")
-  }, []);
 
   const addEvent = (props: any) => {
     console.log(props)
@@ -101,6 +87,21 @@ const Calender = (history: any): JSX.Element => {
       });
     }
   }
+
+  useEffect(() => {
+    console.log("useEffect start")
+    app.auth().onAuthStateChanged(user => {
+      if (user) {
+        const user = app.auth().currentUser;
+        console.log("uid=" + user?.uid)
+        GetEventByAPI()
+        console.log("ログインしてます")
+      } else {
+        console.log("ログインしてません")
+      }
+    });
+    console.log("useEffect end")
+  }, []);
   return (
     <Container>
     <div>
@@ -113,13 +114,6 @@ const Calender = (history: any): JSX.Element => {
         selectable={true}
         selectMirror={true}
         dateClick={(info) => addEvent(info)}
-      // {function (info) {
-      //   alert('Clicked on: ' + info.dateStr);
-      //   alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-      //   alert('Current view: ' + info.view.type);
-      //   // change the day's background color just for fun
-      //   info.dayEl.style.backgroundColor = 'red';
-      // }} 
       />
       </div>
     </Container>

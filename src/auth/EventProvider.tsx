@@ -10,9 +10,7 @@ interface IEventsContext{
     eventsContext: IEventContext[];
     changeEvents: (events:any)=>void
 }
-const defaulEvent: IEventContext[] = [
-]
-
+const defaulEvent: IEventContext[] = []
    
 export const EventContext = React.createContext({
     eventsContext: defaulEvent,

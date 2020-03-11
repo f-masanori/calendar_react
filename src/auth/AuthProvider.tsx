@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { EventContext, IEventContext } from "./EventProvider";
-
 import {withRouter} from 'react-router';
-import {app} from '../base';
+import { app } from '../base';
+
+
 interface IAuthContext {
   login: (email: string, password: string, history: any) => any;
   signup: (email: string, password: string, history: any) => void;
@@ -53,7 +53,6 @@ export const AuthContext = React.createContext(AuthVal);
 
 
 export const AuthProvider: React.FC = (children) => {
-  const { eventsContext, changeEvents } = useContext(EventContext);
   //  useEffect(() => {
   //    app.auth().onAuthStateChanged(user => {
   //      if (user) {
