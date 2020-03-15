@@ -22,8 +22,11 @@ import Container from 'react-bootstrap/Container'
 const Calender = (history: any): JSX.Element => {
   const [calendarPlugins, setCalendarPlugins] = React.useState([dayGridPlugin, interactionPlugin])
   const { eventsContext, changeEvents } = useContext(EventContext);
+  const [nextEventID,setNextEventID]=React.useState(0)
   let calendarRef: any = React.createRef()
 
+  /* /getEventsByUID からのGETで
+  ログインユーザーのEventとnexteventidを取得 */
   const GetEventByAPI = () => {
     console.log("GetEventByAP!!")
     app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
@@ -36,15 +39,18 @@ const Calender = (history: any): JSX.Element => {
         },
       });
       let newEvents: IEventContext[] = []
-      if (res.data) {
-        for (let i = 0; i < res.data.length; i++) {
+      console.log(res.data)
+      if (res.data.Events) {
+        for (let i = 0; i < res.data.Events.length; i++) {
           let temp: IEventContext = {
-            title: res.data[i].Event,
-            date: res.data[i].Date
+            id: res.data.Events[i].EventID,
+            title: res.data.Events[i].Event,
+            date: res.data.Events[i].Date
           }
           newEvents.push(temp)
         }
       }
+      setNextEventID(res.data.NextEventID)
       changeEvents(newEvents)
       setCalendarPlugins([dayGridPlugin, interactionPlugin])
     }).catch((error: any) => {
@@ -72,12 +78,14 @@ const Calender = (history: any): JSX.Element => {
             'Authorization': idToken
           },
           data: {
+            EventID: nextEventID,
             Date: date,
             InputEvent: input
           }
         });
         calendarApi.addEvent(
           { 
+            id: nextEventID,
             title: input,
             date: date
           }
@@ -107,13 +115,14 @@ const Calender = (history: any): JSX.Element => {
     <div>
       <h1>カレンダー</h1>
       <FullCalendar
-        ref={calendarRef}
-        defaultView="dayGridMonth"
-        plugins={calendarPlugins}
-        events={eventsContext}
-        selectable={true}
-        selectMirror={true}
-        dateClick={(info) => addEvent(info)}
+          ref={calendarRef}
+          defaultView="dayGridMonth"
+          plugins={calendarPlugins}
+          events={eventsContext}
+          selectable={true}
+          selectMirror={true}
+          dateClick={(info) => addEvent(info)}
+          eventClick={(info) => alert(info.event.id)}
       />
       </div>
     </Container>

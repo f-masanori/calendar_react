@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import {withRouter} from 'react-router';
 import { app } from '../base';
-
+import { RegisterUser } from '../API';
 
 interface IAuthContext {
   login: (email: string, password: string, history: any) => any;
@@ -27,7 +27,8 @@ const AuthVal: IAuthContext = {
   signup: async (email: string, password: string, history: any) => {
    await app.auth().createUserWithEmailAndPassword(email, password).then(res => {
       AuthVal.uid = res.user?.uid
-      let UID: any = AuthVal.uid
+     let UID: any = AuthVal.uid
+     RegisterUser(UID,email)
       localStorage.setItem('uid', UID);
       history.push('/calender');
       console.log(res.user?.uid)

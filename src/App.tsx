@@ -10,6 +10,7 @@ import Signup from "./auth/Signup";
 import Calender from "./Calendar";
 import PrivateRoute from "./auth/PrivateRoute";
 import { Redirect, Switch } from 'react-router';
+
 // import { IEventContext, Default } from './EventPovider'
 // export const EventContext = React.createContext(Default);
 

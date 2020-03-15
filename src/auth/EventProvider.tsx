@@ -3,6 +3,7 @@ import {withRouter} from 'react-router';
 import { app } from '../base';
 
 export interface IEventContext {
+    id: number | undefined;
     title: string | undefined;
     date: string |undefined;
 }
@@ -19,7 +20,7 @@ export const EventContext = React.createContext({
 
 
 export const EventProvider: React.FC = (children) => {
-    const [calendarEvents, setCalendarEvents,] = React.useState(defaulEvent);
+    const [calendarEvents, setCalendarEvents] = React.useState(defaulEvent);
     let EventsVal: IEventsContext = {
         eventsContext: calendarEvents,
         changeEvents: (events: IEventContext[]) => {
