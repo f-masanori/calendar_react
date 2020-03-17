@@ -25,7 +25,9 @@
     "@fullcalendar/interaction": "4.4.0",
     "bootstrap": "4.4.1",
     "react-bootstrap": "^1.0.0-beta.16",
-    "axios": "^0.19.0"
+    "axios": "^0.19.0",
+    "jquery": "3.4.1",
+    "@types/jquery": "3.3.33"
   },
   "scripts": {
     "start": "react-scripts start",
