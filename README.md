@@ -66,9 +66,10 @@ http://118.27.26.186:9000/#/
 - ~~reactのres~~
   - refを使って内部DOMにアクセスできる→若干reactの流儀に反している
 - jwt認証について
-- nodeの.envの仕組み
+- nodeの.envの詳しい仕組み
 - web(ブラウザ) のlocalstrage
 - reactにおけるファイル構成・設計
+- custom hooks
 
 ### メモ・キーワード
 
@@ -77,11 +78,12 @@ http://118.27.26.186:9000/#/
 ### 学べた事
 
 - TypeScriptの基本的な文法
-- Reactの知識(コンポーネント指向、JSX、Hooks[useState, useEffect],context)
+- Reactの知識(コンポーネント指向、JSX、Hooks[useState, useEffect, useContext, useRef])
 - React-routerの使い方
 - Firebase Authenticationを用いた認証・jwtも
 - axiosを用いた非同期HTTP通信
 - fullcalendarの使い方
+- HTML5のdialog
 
 _____
 
@@ -96,7 +98,18 @@ https://qiita.com/lioneo/items/491984392220c0f24ad0
   - 送信した後に後処理が必要であれば定義する　（せめてsubmitボタンを有効にしなければならない）
   - ajaxを動かしてデータ送信する 詳細は以下の例で徐々に説明させていただきます。
 
+______
 
+###  htmlFor
+
+https://qiita.com/nogizaka46/items/612ba6522d546f5f954f#htmlfor
+
+- htmlタグの属性forのこと
+
+```
+<label htmlFor="namedInput">Name:</label>
+<input id="namedInput" type="text" name="name"/>
+```
 
 ______
 

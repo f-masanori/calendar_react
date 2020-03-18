@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { withRouter } from "react-router";
 import { AuthContext } from "./AuthProvider";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 /* Bootstrap */
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
@@ -20,6 +21,7 @@ const Login = (history :any) :JSX.Element=> {
     signout(history.history)
   }
   return (
+    <div className="LoginContainer">
     <Container>
     <div>
       <h1>Log in</h1>
@@ -43,12 +45,19 @@ const Login = (history :any) :JSX.Element=> {
         </Form.Group>
         <Form.Group as={Row}>
           <Col sm={{ span: 10, offset: 2 }}>
-            <Button type="submit">Login</Button>
-          </Col>
+                <Button type="submit">Login</Button>
+                <Form.Text className="text-muted">登録は
+                  <Link to="/signup">こちら</Link>から
+                 
+    </Form.Text>
+              </Col>
+              
         </Form.Group>
       </Form>
       </div>
-    </Container>
+      </Container>
+      
+    </div>
   );
 };
 

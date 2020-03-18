@@ -36,3 +36,94 @@
     transform: rotate(360deg);
   }
 }
+
+/* カレンダー画面 */
+.divFullCalendar{
+  background-color:rgba(255, 255, 255, 0.504);
+  padding: 10px;
+
+}
+dialog {
+  position: relative;
+  width: 600px;
+  padding: 70px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 0;
+  padding: 0;
+}
+dialog::backdrop {
+  /* 背景を半透明のブラックにする */
+  background-color: rgba(0, 0, 0, 0.4);
+}
+dialog[open] {
+  animation: modal-slide .5s ease;
+}
+.open {
+  margin-top: 40px;
+  margin-left: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 3px;
+  background: #007bbb;
+  font-size: 14px;
+  border: 1px solid #007bbb;
+  color: #fff;
+  letter-spacing: .2px;
+  outline: none;
+  transition: background .2s ease, color .2s ease;
+}
+.open:hover {
+  color: #007bbb;
+  background-color: transparent;
+}
+.close {
+  color: #fff;
+  cursor: pointer;
+  font-size: 40px;
+  position: absolute;
+  right: 10px;
+  top: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+@keyframes modal-open {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-slide {
+  0% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.mt20 {
+  margin-top: 20px;
+}
+
+/* addEventModal */
+.addEventModal {
+  margin: 25px;
+}
+
+/* Login画面 */
+.LoginContainer {
+  font-family: 'Open Sans',sans-serif; 
+}
+
+/* SignIn画面 */
+.SignInContainer {
+  font-family: 'Open Sans',  sans-serif;
+}

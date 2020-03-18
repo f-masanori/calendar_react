@@ -13,6 +13,7 @@ import APIURL from './Config'
 
 /* RegisterUser */
 /* サインインの際に叩くAPI */
+/* ここで初期化しておかないとエラー*/
 export const RegisterUser = (UID:string,email :string) => {
     console.log("Register!!")
     axios({
@@ -109,7 +110,7 @@ export const GetNextEventID =  ():any => {
 
 
 }
-export const AddEvent = (_nextEventID: number, date: string, input: string | null) => { 
+export const AddEvent = (_nextEventID: number, date: string | undefined, input: string | null) => { 
      if (input == "" || input == null) {
       
      } else {
@@ -158,4 +159,11 @@ export const AddEvent = (_nextEventID: number, date: string, input: string | nul
     //     alert(error)
     // });
     console.log("tete")
+}
+/* Event編集 API */
+/* UID と　EventIDに基づいて編集 */
+/* UIDはjwt */
+/* res未実装 */
+export const EditEvent = (eventID: number) => {
+    console.log("EditEvent!!")
 }

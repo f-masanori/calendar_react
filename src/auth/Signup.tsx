@@ -16,6 +16,7 @@ const SignUp = ( history :any):JSX.Element => {
   };
 
   return (
+    <div className="SignInContainer">
     <Container>
       <div>
         <h1>Sign Up</h1>
@@ -44,7 +45,9 @@ const SignUp = ( history :any):JSX.Element => {
           </Form.Group>
         </Form>
       </div>
-    </Container>
+      </Container>
+    </div>
+
   );
 };
 
