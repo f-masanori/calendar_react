@@ -80,7 +80,7 @@ const Calender = (history: any): JSX.Element => {
       alert(error)
     });
   }
-
+  /* Event編集Modal */ 
   const editEvent = (info: any) => {
     console.log("ID : "+info.event.id)
     console.log("Title : " +info.event.title)
@@ -94,7 +94,8 @@ const Calender = (history: any): JSX.Element => {
     setSelectedEventTitle(info.event.title)
     handleShow()
   }
-  const deleteEvent = () => {
+  /*　Event削除  */
+  const handleSubmitForDelete = () => {
     console.log("deleteEvent")
     let calendarApi = calendarRef.current.getApi()
     let _selectedEventID = calendarApi.getEventById(selectedEventID);
@@ -102,7 +103,7 @@ const Calender = (history: any): JSX.Element => {
     API.DeleteEvent(selectedEventID)
     handleClose()
   }
- 
+  /* Event追加 */
   const handleSubmitForAdd = (event: any) => {
     interface AddEventValues {
       NewEventID: number
@@ -119,7 +120,8 @@ const Calender = (history: any): JSX.Element => {
     if (AddEventValues.Title == "" || AddEventValues.Title == null) {
       alert("入力がありません。")
     } else {
-      /* DB変更処理API(Event追加) */
+    /* DB変更処理API(Event追加) */
+      alert(AddEventValues.Title)
       API.AddEvent(AddEventValues.NewEventID, AddEventValues.Date, AddEventValues.Title)
       /* FullCalendarAPI(Event追加) */
       calendarApi.addEvent(
@@ -138,6 +140,7 @@ const Calender = (history: any): JSX.Element => {
     }
     event.preventDefault();
   }
+  /* Event名　編集Form Submmit(API未実装) */
   const handleSubmitForEdit = (event: any) => {
     let calendarApi = calendarRef.current.getApi()
     // console.log(eventsContext)
@@ -148,15 +151,20 @@ const Calender = (history: any): JSX.Element => {
     handleClose()
     event.preventDefault();
   }
+  /* Event名　編集Formに使用 */
   const handleChange = (event:any) =>{
     setSelectedEventTitle(event.target.value );
   }
+  /* Event追加用のmodal Close */
   const closeModalForAddEvent = () => {
     if (null !== addEventModalRef.current) {
       addEventModalRef.current.close()
     }
   }
+/* Event追加用のmodal OPEN */
   const openModalForAddEvent = (props: any) => {
+  /* dateClick()内の関数でstateの変更ができない(Reactの仕様？FullCalllendarの仕様?) */
+    /* そこでHtmlのinputにデータを挿入する */
     let date = props.dateStr
     if (null !== addEventModalDateRef.current) {
       addEventModalDateRef.current.innerText = date
@@ -200,7 +208,7 @@ const Calender = (history: any): JSX.Element => {
                 selectMirror={true}
                 dateClick={(info) => { openModalForAddEvent(info) }}
                 eventClick={(info) => { editEvent(info) }}
-                navLinks={true}
+                // navLinks={true}
                 // navLinkDayClick={(date, jsEvent)=> {
                 //   console.log(date)
                 //   handleShow()
@@ -220,8 +228,8 @@ const Calender = (history: any): JSX.Element => {
               <Form.Control placeholder="新規Event追加" ref={formRef} />
             </Form.Group>
             <Button variant="primary" type="submit">
-              Submit
-                </Button>
+              追加
+            </Button>
           </Form>
           <button id="close" className="close" type="button" onClick={(e) => closeModalForAddEvent()}>&times;</button>
           </div>
@@ -252,7 +260,7 @@ const Calender = (history: any): JSX.Element => {
         <Button variant="primary" onClick={handleSubmitForEdit}>
           保存
           </Button>
-        <Button variant="danger" onClick={deleteEvent}>
+          <Button variant="danger" onClick={handleSubmitForDelete}>
           Event削除
           </Button>
       </Modal.Footer>

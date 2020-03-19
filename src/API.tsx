@@ -111,6 +111,8 @@ export const GetNextEventID =  ():any => {
 
 }
 export const AddEvent = (_nextEventID: number, date: string | undefined, input: string | null) => { 
+    console.log("AddEvent!!")
+    console.log(input)
      if (input == "" || input == null) {
       
      } else {
@@ -132,32 +134,7 @@ export const AddEvent = (_nextEventID: number, date: string | undefined, input: 
         alert(error)
     });
     }
-    // app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
-    //     const res = await axios({
-    //         method: 'post',
-    //         url: APIURL + '/addEvent',
-    //         headers: {
-    //             'Content-Type': "application/json",
-    //             'Authorization': idToken
-    //         },
-    //         data: {
-    //             EventID: _nextEventID,
-    //             Date: date,
-    //             InputEvent: input
-    //         }
-    //     });
-
-    //     // calendarApi.addEvent(
-    //     //   { 
-    //     //     id: _nextEventID,
-    //     //     title: input,
-    //     //     date: date
-    //     //   }
-    //     // )
-      
-    // }).catch((error: any) => {
-    //     alert(error)
-    // });
+ 
     console.log("tete")
 }
 /* Event編集 API */

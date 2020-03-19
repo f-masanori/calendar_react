@@ -11,7 +11,10 @@
 - 言語 : Typescript,HTML, CSS, JavaScript,
 - フレームワーク、ライブラリ : React, Bootstrap, FullCalendar
 - ツール : Git, Firebase Authentication
-- 開発環境 : mac mojave 10.14.6
+- 開発環境 
+  - mac mojave :  10.14.6
+  - node : v12.11.1
+  - npm : 6.14.2
 
 ### 実行方法
 
@@ -24,7 +27,7 @@
 
 - conohaのVPS
 
-http://118.27.26.186:9000/#/
+http://118.27.26.186:9000/
 
 - メモ
   - ` $ hs -p 9000 &`でサーバー立ち上げ(./build内・`&`でバックグラウンドで起動)
@@ -43,14 +46,19 @@ http://118.27.26.186:9000/#/
 ### React の実装について
 
 - 全て関数コンポーネントを使用
+- Hooksを使用
 
 ### 改善したい点
 
-- イベントを削除する機能追加
+- ~~イベントを削除する機能追加~~
 - イベントの表示の色を好みで変えれるようにしたい
 - UI/UXを考えたデザインにしたい
-- 安全なサイト(ssl)
+- 安全なサイト(ssl)[デプロイ時]
 - コンテナとコンポーネントを意識したファイル構成にしたい
+- 外部APIの記述ファイルをinterfaceを使って、より見やすくしたい
+- 外部APIを叩く関数は全てAPIにまとめたい
+- デプロイしてサーバーのプロセスがなぜが止まっている[バックグラウンドにはしている]
+  - nodeのhttp-serverを使っているが、その原因解明
 
 ### なぜ
 
@@ -59,6 +67,8 @@ http://118.27.26.186:9000/#/
 - なぜTypeScriptか
   - 型チェックがあり、ミスが減る
 - なぜ関数コンポーネントを使うのか
+  - reactの概念に近い
+  - 公式も新規開発時には関数コンポーネントを推奨
 
 ### 勉強すべき点
 
@@ -84,10 +94,30 @@ http://118.27.26.186:9000/#/
 - axiosを用いた非同期HTTP通信
 - fullcalendarの使い方
 - HTML5のdialog
+- 若干のCSS,htmlの知識
 
 _____
+## 詰まった点・問題点とその解決策
 
-## Formデーター送信する流れ
+- FullCalenadarのdateClick(info)を発火とした関数内ではstateを変更できない（dateClick()がcallback関数でありその中でのstate変更はアウト？単純にfullcalendarとreactの相性？）
+  - dateClick(info)をトリガーとしたmodalを作成したかったが、Bootstrapmodalはstateを使うため不可
+  - Bootstrapmodalにrefをつけてやろうと色々いじってみたが、できない,,
+  - そこでCSS onlyのmodalを作成したが、そのmodalではformが正しく機能しなかった(やり方が悪かったのか？)
+  - 調べているとHTML5からのdialogという機能をできるかもと思ってdialogとCSSを使った自作modal実装(Ref使用)→できた！
+- 外部APIを叩く実装にて、thenの中で処理の続きを書くと少し冗長
+  - 外部APIを叩く関数は１まとめにしようと試みたが、非同期処理の勉強不足で失敗
+  - async/awaitについて勉強したらできそうな気がしている
+- 自作modalにて、modal外をクリックでCLOSEにしたい
+  - →e.stopPropagation()使用で可能
+- Event追加はdateClick(info)をトリガーとして発火する関数内で実装→state使用できない→順に振られるeventIDの管理どうしよう→html inputのvalueにrefを使って管理
+- サインアウトしてログインしなおすとfirebaseのバグ？
+  - サインアウト時にreloadで対応
+
+______
+
+## HTML関連メモ
+
+### Formデーター送信する流れ
 https://qiita.com/lioneo/items/491984392220c0f24ad0
 - FormのHTML作成して送信先と送信メソッドを定義する
 - サーバーの処理を定義する
@@ -111,11 +141,13 @@ https://qiita.com/nogizaka46/items/612ba6522d546f5f954f#htmlfor
 <input id="namedInput" type="text" name="name"/>
 ```
 
-______
+_________
 
-グローバル環境を汚したくなかったため、Docker上で開発を試みたが、npm startからの立ち上げが遅かったため中止
+- 
 
-### docker 上でのReact環境構築方法
+### ~~docker 上でのReact環境構築方法~~
+
+<u>グローバル環境を汚したくなかったため、Docker上で開発を試みたが、npm startからの立ち上げが遅かったため中止</u>
 
 Dockerfile
 
@@ -144,7 +176,7 @@ services:
 
 ``docker-compose run --rm node sh -c "npx create-react-app アプリ名 --typescript"``
 
-### Dockerコンテナへの入り方
+
 
 ### npm インストール時
 CXX=clang++ npm install　　
