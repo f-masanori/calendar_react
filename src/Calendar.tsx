@@ -31,7 +31,7 @@ const Calender = (history: any): JSX.Element => {
   const [nextEventID,setNextEventID]=React.useState(0)
   const [selectedEventID, setSelectedEventID] = useState(0);
   const [selectedEventTitle, setSelectedEventTitle] = useState("0");
-  const [newEventTitle, setNewEventTitle] = useState("");
+  const [calendarActive, setCalendarActive]=useState("calendar-not-active")
   /* Bootstrap-modal */
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -75,25 +75,13 @@ const Calender = (history: any): JSX.Element => {
       }
       setNextEventID(res.data.NextEventID)
       changeEvents(newEvents)
+      setCalendarActive("ac")
       // setCalendarPlugins([dayGridPlugin, interactionPlugin])
     }).catch((error: any) => {
       alert(error)
     });
   }
-  /* Event編集Modal */ 
-  const editEvent = (info: any) => {
-    console.log("ID : "+info.event.id)
-    console.log("Title : " +info.event.title)
-    let calendarApi = calendarRef.current.getApi()
-    let eee = calendarApi.getEventById(info.event.id);
-    console.log(eee)
-    let allevents = calendarApi.getEvents()
-    console.log(allevents[2])
-    calendarApi.refetchEvents()
-    setSelectedEventID(info.event.id)
-    setSelectedEventTitle(info.event.title)
-    handleShow()
-  }
+
   /*　Event削除  */
   const handleSubmitForDelete = () => {
     console.log("deleteEvent")
@@ -139,6 +127,18 @@ const Calender = (history: any): JSX.Element => {
       closeModalForAddEvent()
     }
     event.preventDefault();
+  }
+  /* Event編集Modal */
+  const editEvent = (info: any) => {
+    // console.log("ID : "+info.event.id)
+    // console.log("Title : " +info.event.title)
+    let calendarApi = calendarRef.current.getApi()
+    let allevents = calendarApi.getEvents()
+    // console.log(allevents[2])
+    calendarApi.refetchEvents()
+    setSelectedEventID(info.event.id)
+    setSelectedEventTitle(info.event.title)
+    handleShow()
   }
   /* Event名　編集Form Submmit(API未実装) */
   const handleSubmitForEdit = (event: any) => {
@@ -191,8 +191,8 @@ const Calender = (history: any): JSX.Element => {
   }, []);
 
   return (
-    <div>
-      <div>
+    <div >
+      <div className={calendarActive}>
         <div >
           <Container className="divFullCalendar">
             <h1>カレンダー</h1>

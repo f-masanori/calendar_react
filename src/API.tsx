@@ -112,7 +112,6 @@ export const GetNextEventID =  ():any => {
 }
 export const AddEvent = (_nextEventID: number, date: string | undefined, input: string | null) => { 
     console.log("AddEvent!!")
-    console.log(input)
      if (input == "" || input == null) {
       
      } else {
