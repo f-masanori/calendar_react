@@ -23,7 +23,7 @@ import Form from 'react-bootstrap/Form'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-
+import Spinner from 'react-bootstrap/Spinner'
 const Calender = (history: any): JSX.Element => {
   /* [dayGridPlugin, interactionPlugin]この制御するとエラーになる(時間ある時整形) */
   const [calendarPlugins, setCalendarPlugins] = React.useState([dayGridPlugin, interactionPlugin])
@@ -31,7 +31,8 @@ const Calender = (history: any): JSX.Element => {
   const [nextEventID,setNextEventID]=React.useState(0)
   const [selectedEventID, setSelectedEventID] = useState(0);
   const [selectedEventTitle, setSelectedEventTitle] = useState("0");
-  const [calendarActive, setCalendarActive]=useState("calendar-not-active")
+  const [calendarActive, setCalendarActive] = useState("calendar-not-active")
+  const [loadingAnimation, setLoadingAnimation] = useState<JSX.Element>(<div></div>)
   /* Bootstrap-modal */
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -75,7 +76,8 @@ const Calender = (history: any): JSX.Element => {
       }
       setNextEventID(res.data.NextEventID)
       changeEvents(newEvents)
-      setCalendarActive("ac")
+      setCalendarActive("active")
+      setLoadingAnimation(<div></div>)
       // setCalendarPlugins([dayGridPlugin, interactionPlugin])
     }).catch((error: any) => {
       alert(error)
@@ -177,6 +179,12 @@ const Calender = (history: any): JSX.Element => {
   }
   useEffect(() => {
     console.log("useEffect start")
+    setLoadingAnimation(<div className="loading-animation">
+      <Spinner animation="border" role="status">
+        <span className="sr-only"> Loading...</span>
+      </Spinner>
+          Loading...
+        </div>)
     app.auth().onAuthStateChanged(user => {
       if (user) {
         const user = app.auth().currentUser;
@@ -193,6 +201,9 @@ const Calender = (history: any): JSX.Element => {
   return (
     <div >
       <div className={calendarActive}>
+    
+       {loadingAnimation}
+
         <div >
           <Container className="divFullCalendar">
             <h1>カレンダー</h1>

@@ -119,6 +119,9 @@ _____
 - Event追加はdateClick(info)をトリガーとして発火する関数内で実装→state使用できない→順に振られるeventIDの管理どうしよう→html inputのvalueにrefを使って管理
 - サインアウトしてログインしなおすとfirebaseのバグ？
   - サインアウト時にreloadで対応
+- FullCalendarの描画途中にクリックするとエラー
+  - →描画中はクリックできないようにする
+  -  pointer-events: none;とz-index を使用（css）
 
 ______
 

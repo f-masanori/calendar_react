@@ -4,3 +4,9 @@
 
 ビルド後のファイルはブラウザ上で動くJavaScript
 
+https://qiita.com/uhyo/items/e4f54ef3b87afdd65546#2-5-usestate
+
+```
+// 型引数を明示することも可能
+const [anotherState, setAnotherState] = useState<number | null>(null);
+```

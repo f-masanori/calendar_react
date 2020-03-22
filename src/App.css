@@ -40,14 +40,16 @@
 /* カレンダー画面 */
  /* カレンダーが操作可能か否か*/
 .calendar-not-active{
-  z-index:999;
-  position:absolute;
-   top:0px;
-   left:0px;
-   right:0px;
-   bottom:0px;
+  pointer-events: none;
+  z-index:1000;
   background-color:gray;
-  opacity:0.8;
+}
+.loading-animation{
+  padding: 1% 50%;
+  z-index:1001;
+  /* margin: 0px auto; */
+  width:50px;
+  position:absolute;
 }
 
 .divFullCalendar{
