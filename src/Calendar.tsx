@@ -111,7 +111,6 @@ const Calender = (history: any): JSX.Element => {
       alert("入力がありません。")
     } else {
     /* DB変更処理API(Event追加) */
-      alert(AddEventValues.Title)
       API.AddEvent(AddEventValues.NewEventID, AddEventValues.Date, AddEventValues.Title)
       /* FullCalendarAPI(Event追加) */
       calendarApi.addEvent(

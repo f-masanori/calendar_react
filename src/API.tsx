@@ -113,7 +113,6 @@ export const GetNextEventID =  ():any => {
 export const AddEvent = (_nextEventID: number, date: string | undefined, input: string | null) => { 
     console.log("AddEvent!!")
      if (input == "" || input == null) {
-      
      } else {
         app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
         const res = await axios({
@@ -133,8 +132,6 @@ export const AddEvent = (_nextEventID: number, date: string | undefined, input: 
         alert(error)
     });
     }
- 
-    console.log("tete")
 }
 /* Event編集 API */
 /* UID と　EventIDに基づいて編集 */
