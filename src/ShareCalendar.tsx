@@ -49,9 +49,20 @@ const Calender = (history: any): JSX.Element => {
   /* /getEventsByUID からのGETで
   ログインユーザーのEventとnexteventidを取得 */
   const GetEventByAPI = async () => {
-    console.log("GetEventByAP!!")
-    let res = await API.GetEvents()
-    let newEvents: IEventContext[] = []
+      console.log("GetEventByAP!!")
+      let res = await API.GetEvents()
+      console.log(res)
+    // app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
+    //   const res = await axios({
+    //     method: 'get',
+    //     url: APIURL+'/getEventsByUID',
+    //     headers: {
+    //       'Content-Type': "application/json",
+    //       'Authorization': idToken
+    //     },
+    //   });
+      let newEvents: IEventContext[] = []
+      console.log(res.data)
       if (res.data.Events) {
         for (let i = 0; i < res.data.Events.length; i++) {
           let temp: IEventContext = {
@@ -128,7 +139,7 @@ const Calender = (history: any): JSX.Element => {
     setSelectedEventTitle(info.event.title)
     handleShow()
   }
-  /* Event名　編集Form Submmit(API未実装) */
+  /* Event名編集Form Submmit(API未実装) */
   const handleSubmitForEdit = (event: any) => {
     let calendarApi = calendarRef.current.getApi()
     // console.log(eventsContext)
@@ -139,17 +150,17 @@ const Calender = (history: any): JSX.Element => {
     handleClose()
     event.preventDefault();
   }
-  /* Event名　編集Formに使用 */
+  /* Event名編集Formに使用 */
   const handleChange = (event:any) =>{
     setSelectedEventTitle(event.target.value );
   }
-  /* Event追加用のmodal Close */
+  /* Event追加用のdialog.modal Close */
   const closeModalForAddEvent = () => {
     if (null !== addEventModalRef.current) {
       addEventModalRef.current.close()
     }
   }
-/* Event追加用のmodal OPEN */
+  /* Event追加用のdialog.modal OPEN */
   const openModalForAddEvent = (props: any) => {
   /* dateClick()内の関数でstateの変更ができない(Reactの仕様？FullCalllendarの仕様?) */
     /* そこでHtmlのinputにデータを挿入する */

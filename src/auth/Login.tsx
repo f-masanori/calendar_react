@@ -20,6 +20,14 @@ const Login = (history :any) :JSX.Element=> {
     console.log("サインアウト")
     signout(history.history)
   }
+  React.useEffect(() => {
+    console.log("useEffect start")
+    let UID: string | null = localStorage.getItem('uid');
+    if (UID !== "") {
+      history.history.push('/calender');
+    }
+    console.log("useEffect end")
+  }, []);
   return (
     <div className="LoginContainer">
     <Container>

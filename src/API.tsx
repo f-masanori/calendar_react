@@ -13,7 +13,8 @@ import APIURL from './Config'
 
 /* RegisterUser */
 /* サインインの際に叩くAPI */
-/* ここで初期化しておかないとエラー*/
+/* ここで初期化しておかないとDB処理でエラー
+NextEventIDの部分*/
 export const RegisterUser = (UID:string,email :string) => {
     console.log("Register!!")
     axios({
@@ -39,6 +40,31 @@ export const RegisterUser = (UID:string,email :string) => {
         }
     });
 }
+
+// new Promise((resolve, reject) => {
+//     setTimeout(() => resolve("done!"), 1000)
+// });
+// export const GetEvents = new Promise((resolve, reject) => setTimeout(resolve, 3000));
+export const GetEvents =  (): Promise<any> => {
+    let res: any
+    return new Promise(resolve => {
+           app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
+        res = await axios({
+            method: 'get',
+            url: APIURL + '/getEventsByUID',
+            headers: {
+                'Content-Type': "application/json",
+                'Authorization': idToken
+            },
+        });
+               resolve(res)
+    }).catch((error: any) => {
+        alert(error)
+    });
+
+    })
+}
+
 
 /* Event削除 API */
 /* UID と　EventIDに基づいて削除 */
@@ -133,6 +159,8 @@ export const AddEvent = (_nextEventID: number, date: string | undefined, input: 
     });
     }
 }
+
+
 /* Event編集 API */
 /* UID と　EventIDに基づいて編集 */
 /* UIDはjwt */

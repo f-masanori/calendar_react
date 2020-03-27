@@ -17,13 +17,14 @@ const Header = (history: any) => {
 
     let UID: string|null = localStorage.getItem('uid');
     let NavAuthentication: JSX.Element;
-    if (UID == "") {
+    if (UID === "") {
         NavAuthentication = (<Nav><Nav><Link to="/login">login</Link></Nav>
             <Nav><p style={{ fontSize: `50%` }}>&nbsp;&nbsp;</p></Nav>
             <Nav><Link to="/signup">signup</Link></Nav></Nav>)
     } else {
         NavAuthentication = (<Nav className="justify-content-end" activeKey="/home">
             <Nav.Item>
+                <Nav.Link>s</Nav.Link>
                 <Nav.Link onClick={clickSignOut}>SignOut</Nav.Link>
             </Nav.Item>          
         </Nav>)
@@ -34,6 +35,7 @@ const Header = (history: any) => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
+                    <Nav.Link> <Link to="./sharecalendar">共有カレンダー</Link></Nav.Link>
                     {/* <Nav><Link to="/calender">calender&nbsp;&nbsp;</Link></Nav> */}
                     {/* <Nav><Link to="/">Home</Link></Nav> */}
                 </Nav>

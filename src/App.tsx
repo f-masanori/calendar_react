@@ -8,6 +8,8 @@ import Header from "./Header";
 import Login from "./auth/Login";
 import Signup from "./auth/Signup";
 import Calender from "./Calendar";
+import ShareCalendar from "./ShareCalendar";
+
 import PrivateRoute from "./auth/PrivateRoute";
 import { Redirect, Switch } from 'react-router';
 
@@ -25,7 +27,9 @@ function App() {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
-            <PrivateRoute exact path="/calender" component={Calender} />
+              <PrivateRoute exact path="/calender" component={Calender} />
+              <PrivateRoute exact path="/sharecalendar" component={ShareCalendar} />
+
             <Route exact path="/" component={Login} />
           </Switch>
         </div>
