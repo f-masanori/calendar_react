@@ -52,11 +52,13 @@
   position:absolute;
 }
 
+/* */
 .divFullCalendar{
   background-color:rgba(255, 255, 255, 0.504);
   padding: 10px;
 
 }
+/* 自作モーダル */
 dialog {
   position: relative;
   width: 600px;
@@ -130,6 +132,45 @@ dialog[open] {
 /* addEventModal */
 .addEventModal {
   margin: 25px;
+}
+
+/**/
+/* Radio */
+input[type=radio] {
+  border-radius: 10%;
+}
+
+input[type=radio]:checked:before {
+  transform: scale(1);
+}
+
+input[type=radio]:before {
+  content: "";
+  display: block;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: all ease-out 250ms;
+}
+
+/* 色は青色のみ */
+input[type=checkbox].blue,
+input[type=radio].blue {
+  border: 6px solid #2196f3;
+}
+
+input[type=checkbox].blue:checked,
+input[type=checkbox].blue:indeterminate,
+input[type=radio].blue:checked:before {
+  background: #2196f3;
+}
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: skyblue;
+  /*背景色*/
 }
 
 /* Login画面 */

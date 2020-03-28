@@ -5,7 +5,10 @@ import { app } from '../base';
 export interface IEventContext {
     id: number | undefined;
     title: string | undefined;
-    date: string |undefined;
+    date: string | undefined;
+    backgroundColor: string | undefined;
+    borderColor: string | undefined;
+    textColor: string | undefined;
 }
 interface IEventsContext{
     eventsContext: IEventContext[];

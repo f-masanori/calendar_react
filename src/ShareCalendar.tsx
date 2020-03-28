@@ -68,7 +68,10 @@ const Calender = (history: any): JSX.Element => {
           let temp: IEventContext = {
             id: res.data.Events[i].EventID,
             title: res.data.Events[i].Event,
-            date: res.data.Events[i].Date
+              date: res.data.Events[i].Date,
+              backgroundColor: "skyblue",
+              borderColor: "skyblue",
+              textColor: "black"
           }
           newEvents.push(temp)
         }

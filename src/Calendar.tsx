@@ -19,11 +19,15 @@ import * as API from './API'
 
 /* Bootstrap */
 import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+
 import Form from 'react-bootstrap/Form'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Spinner from 'react-bootstrap/Spinner'
+/* ColorSet */
+import colorSet from './ColorSet'
 const Calender = (history: any): JSX.Element => {
   /* [dayGridPlugin, interactionPlugin]この制御するとエラーになる(時間ある時整形) */
   const [calendarPlugins, setCalendarPlugins] = React.useState([dayGridPlugin, interactionPlugin])
@@ -31,8 +35,13 @@ const Calender = (history: any): JSX.Element => {
   const [nextEventID,setNextEventID]=React.useState(0)
   const [selectedEventID, setSelectedEventID] = useState(0);
   const [selectedEventTitle, setSelectedEventTitle] = useState("0");
+  const [selectedBackColor, setSelectedBackColor] = useState("Skyblue")
+  const [selectedBorderColor, setSelectedBorderColor] = useState("Skyblue")
+  const [selectedTextColor, setSelectedTextColor] = useState("black")
+
   const [calendarActive, setCalendarActive] = useState("calendar-not-active")
   const [loadingAnimation, setLoadingAnimation] = useState<JSX.Element>(<div></div>)
+  const [checkedBackColor, setCheckedBackColor] = useState({ skyblue: false, mediumaquamarine: false, orange:false})
   /* Bootstrap-modal */
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -57,7 +66,10 @@ const Calender = (history: any): JSX.Element => {
           let temp: IEventContext = {
             id: res.data.Events[i].EventID,
             title: res.data.Events[i].Event,
-            date: res.data.Events[i].Date
+            date: res.data.Events[i].Date,
+            backgroundColor: res.data.Events[i].BackgroundColor,
+            borderColor: "skyblue",
+            textColor:"black"
           }
           newEvents.push(temp)
         }
@@ -76,7 +88,9 @@ const Calender = (history: any): JSX.Element => {
     console.log("deleteEvent")
     let calendarApi = calendarRef.current.getApi()
     let _selectedEventID = calendarApi.getEventById(selectedEventID);
+    /* 画面上から削除 */
     _selectedEventID.remove()
+    /* DB上から削除 */
     API.DeleteEvent(selectedEventID)
     handleClose()
   }
@@ -99,7 +113,7 @@ const Calender = (history: any): JSX.Element => {
     } else {
     /* DB変更処理API(Event追加) */
       API.AddEvent(AddEventValues.NewEventID, AddEventValues.Date, AddEventValues.Title)
-      /* FullCalendarAPI(Event追加) */
+      /* 画面上Event更新 */
       calendarApi.addEvent(
         {
           id: AddEventValues.NewEventID,
@@ -107,6 +121,7 @@ const Calender = (history: any): JSX.Element => {
           date: AddEventValues.Date
         }
       )
+      /* EventID管理 */
       if (null !== newEventIDRef.current) {
         newEventIDRef.current.value = String(Number(newEventIDRef.current.value) + 1);
       }
@@ -136,6 +151,8 @@ const Calender = (history: any): JSX.Element => {
     // console.log(selectedEventID)
     let selectedevent = calendarApi.getEventById(selectedEventID)
     selectedevent.setProp("title", selectedEventTitle)
+    selectedevent.setProp("backgroundColor", selectedBackColor)
+    API.EditEvent(selectedEventID, selectedEventTitle, selectedBackColor,selectedBorderColor,selectedTextColor)
     handleClose()
     event.preventDefault();
   }
@@ -154,6 +171,7 @@ const Calender = (history: any): JSX.Element => {
   /* dateClick()内の関数でstateの変更ができない(Reactの仕様？FullCalllendarの仕様?) */
     /* そこでHtmlのinputにデータを挿入する */
     let date = props.dateStr
+    /* クリックされた日付をモーダルのタイトル表示&日付埋め込み */
     if (null !== addEventModalDateRef.current) {
       addEventModalDateRef.current.innerText = date
     }
@@ -162,6 +180,31 @@ const Calender = (history: any): JSX.Element => {
       addEventModalRef.current.showModal()
     }
 
+  }
+/* Event背景色変更 */
+  const changeBackColor = (color: string) => {
+    setSelectedBackColor(color)
+  }
+  const backColorJSX = ():JSX.Element => {
+    return (<Row>
+      <Col>バックカラー</Col>
+      {colorSet.map((color) => <Col><input className="blue" type="radio"onClick={(e) => changeBackColor(color)} /></Col>)}
+      {/* <Col><input className="blue" type="radio" name="group2" /><p className="circle"></p></Col>
+      <Col><input className="blue" type="radio" name="group2" onClick={(e) => changeBackColor("Red")} /></Col>
+      <Col><input className="blue" type="radio" name="group2" /></Col> */}
+    </Row>)
+  }
+  const borderColorJSX = (): JSX.Element => {
+    return (<Row>
+      <Col>ボーダーカラー</Col>
+      {colorSet.map((color) => <Col><input className="blue" type="radio" onClick={(e) => changeBackColor(color)} /></Col>)}
+    </Row>)
+  }
+  const textColorJSX = (): JSX.Element => {
+    return (<Row>
+      <Col>テキストカラー</Col>
+      {colorSet.map((color) => <Col><input className="blue" type="radio" onClick={(e) => changeBackColor(color)} /></Col>)}
+    </Row>)
   }
   useEffect(() => {
     console.log("useEffect start")
@@ -232,7 +275,7 @@ const Calender = (history: any): JSX.Element => {
           </div>
         </div>
     </dialog>
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} >
       <Modal.Header closeButton>
         <Modal.Title>Event編集</Modal.Title>
       </Modal.Header>
@@ -246,9 +289,13 @@ const Calender = (history: any): JSX.Element => {
             <Col>
               <Form.Control type="text" defaultValue={selectedEventTitle} onChange={handleChange} />
             </Col>
-          </Form.Row>
-          <br />
-        </Form.Group>
+            </Form.Row>
+            {backColorJSX()}
+            {borderColorJSX()}
+            {textColorJSX()}
+            <br />
+          </Form.Group>
+          
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>

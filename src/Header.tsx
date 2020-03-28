@@ -35,7 +35,7 @@ const Header = (history: any) => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link> <Link to="./sharecalendar">共有カレンダー</Link></Nav.Link>
+                    {/* <Nav.Link> <Link to="./sharecalendar">共有カレンダー</Link></Nav.Link> */}
                     {/* <Nav><Link to="/calender">calender&nbsp;&nbsp;</Link></Nav> */}
                     {/* <Nav><Link to="/">Home</Link></Nav> */}
                 </Nav>

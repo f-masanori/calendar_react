@@ -41,14 +41,11 @@ export const RegisterUser = (UID:string,email :string) => {
     });
 }
 
-// new Promise((resolve, reject) => {
-//     setTimeout(() => resolve("done!"), 1000)
-// });
-// export const GetEvents = new Promise((resolve, reject) => setTimeout(resolve, 3000));
 export const GetEvents =  (): Promise<any> => {
     let res: any
+    /* reject処理未実装 */
     return new Promise(resolve => {
-           app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
+        app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
         res = await axios({
             method: 'get',
             url: APIURL + '/getEventsByUID',
@@ -57,10 +54,10 @@ export const GetEvents =  (): Promise<any> => {
                 'Authorization': idToken
             },
         });
-               resolve(res)
-    }).catch((error: any) => {
-        alert(error)
-    });
+        resolve(res)
+        }).catch((error: any) => {
+            alert(error)
+        });
 
     })
 }
@@ -165,6 +162,25 @@ export const AddEvent = (_nextEventID: number, date: string | undefined, input: 
 /* UID と　EventIDに基づいて編集 */
 /* UIDはjwt */
 /* res未実装 */
-export const EditEvent = (eventID: number) => {
+export const EditEvent = (EventID: number, InputEvent: string, BackgroundColor: string, BorderColor: string, TextColor:string) => {
     console.log("EditEvent!!")
+    app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
+        const res = await axios({
+            method: 'post',
+            url: APIURL + '/editEvent',
+            headers: {
+                'Content-Type': "application/json",
+                'Authorization': idToken
+            },
+            data: {
+                EventID: String(EventID),
+                InputEvent: InputEvent,
+                BackgroundColor: BackgroundColor,
+                BorderColor: BorderColor,
+                TextColor: TextColor
+            }
+        });
+    }).catch((error: any) => {
+        alert(error)
+    });
 }
