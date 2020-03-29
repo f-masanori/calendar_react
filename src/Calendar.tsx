@@ -35,13 +35,16 @@ const Calender = (history: any): JSX.Element => {
   const [nextEventID,setNextEventID]=React.useState(0)
   const [selectedEventID, setSelectedEventID] = useState(0);
   const [selectedEventTitle, setSelectedEventTitle] = useState("0");
-  const [selectedBackColor, setSelectedBackColor] = useState("Skyblue")
-  const [selectedBorderColor, setSelectedBorderColor] = useState("Skyblue")
+  const [selectedBackColor, setSelectedBackColor] = useState("skyblue")
+  const [selectedBorderColor, setSelectedBorderColor] = useState("skyblue")
   const [selectedTextColor, setSelectedTextColor] = useState("black")
 
   const [calendarActive, setCalendarActive] = useState("calendar-not-active")
   const [loadingAnimation, setLoadingAnimation] = useState<JSX.Element>(<div></div>)
-  const [checkedBackColor, setCheckedBackColor] = useState({ skyblue: false, mediumaquamarine: false, orange:false})
+  const [checkedBackColor, setCheckedBackColor] = useState("")
+  const [checkedBorderColor, setCheckedBorderColor] = useState("")
+  const [checkedTextColor, setCheckedTextColor] = useState("")
+
   /* Bootstrap-modal */
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -68,8 +71,8 @@ const Calender = (history: any): JSX.Element => {
             title: res.data.Events[i].Event,
             date: res.data.Events[i].Date,
             backgroundColor: res.data.Events[i].BackgroundColor,
-            borderColor: "skyblue",
-            textColor:"black"
+            borderColor: res.data.Events[i].BorderColor,
+            textColor: res.data.Events[i].TextColor
           }
           newEvents.push(temp)
         }
@@ -118,7 +121,10 @@ const Calender = (history: any): JSX.Element => {
         {
           id: AddEventValues.NewEventID,
           title: AddEventValues.Title,
-          date: AddEventValues.Date
+          date: AddEventValues.Date,
+          backgroundColor:"skyblue",
+          borderColor:"skyblue",
+          textColor:"black"
         }
       )
       /* EventID管理 */
@@ -136,11 +142,14 @@ const Calender = (history: any): JSX.Element => {
     // console.log("ID : "+info.event.id)
     // console.log("Title : " +info.event.title)
     let calendarApi = calendarRef.current.getApi()
-    let allevents = calendarApi.getEvents()
-    // console.log(allevents[2])
+    console.log(info.event.backgroundColor)
     calendarApi.refetchEvents()
     setSelectedEventID(info.event.id)
     setSelectedEventTitle(info.event.title)
+    setCheckedBackColor(info.event.backgroundColor)
+    setCheckedBorderColor(info.event.borderColor)
+    setCheckedTextColor(info.event.textColor)
+
     handleShow()
   }
   /* Event名　編集Form Submmit(API未実装) */
@@ -150,10 +159,15 @@ const Calender = (history: any): JSX.Element => {
     // console.log(selectedEventTitle)
     // console.log(selectedEventID)
     let selectedevent = calendarApi.getEventById(selectedEventID)
+    /* イベントの画面更新 */
     selectedevent.setProp("title", selectedEventTitle)
-    selectedevent.setProp("backgroundColor", selectedBackColor)
-    API.EditEvent(selectedEventID, selectedEventTitle, selectedBackColor,selectedBorderColor,selectedTextColor)
+    selectedevent.setProp("backgroundColor", checkedBackColor)
+    selectedevent.setProp("borderColor", checkedBorderColor)
+    selectedevent.setProp("textColor", checkedTextColor)
+    /* イベントのDB更新 */
+    API.EditEvent(selectedEventID, selectedEventTitle, checkedBackColor,checkedBorderColor,checkedTextColor)
     handleClose()
+    /* Reactでのフォームの定石？*/
     event.preventDefault();
   }
   /* Event名　編集Formに使用 */
@@ -181,29 +195,28 @@ const Calender = (history: any): JSX.Element => {
     }
 
   }
-/* Event背景色変更 */
-  const changeBackColor = (color: string) => {
-    setSelectedBackColor(color)
-  }
   const backColorJSX = ():JSX.Element => {
-    return (<Row>
-      <Col>バックカラー</Col>
-      {colorSet.map((color) => <Col><input className="blue" type="radio"onClick={(e) => changeBackColor(color)} /></Col>)}
-      {/* <Col><input className="blue" type="radio" name="group2" /><p className="circle"></p></Col>
-      <Col><input className="blue" type="radio" name="group2" onClick={(e) => changeBackColor("Red")} /></Col>
-      <Col><input className="blue" type="radio" name="group2" /></Col> */}
+    return (<Row id="color-set-row">
+      <Col sm={4}>バックカラー</Col>
+      <Col sm={8}><Row>
+        {colorSet.map((color) => <Col id="calendar-color"><div className={"calendar-color-" + color}><input className="ragio-color"  type="radio" onChange={(e) => { setCheckedBackColor(color) }} checked={checkedBackColor === color} /></div></Col>)}
+      </Row></Col>
     </Row>)
   }
   const borderColorJSX = (): JSX.Element => {
-    return (<Row>
-      <Col>ボーダーカラー</Col>
-      {colorSet.map((color) => <Col><input className="blue" type="radio" onClick={(e) => changeBackColor(color)} /></Col>)}
+    return (<Row id="color-set-row">
+      <Col sm={4}>ボーダーカラー</Col>
+      <Col sm={8}><Row>
+        {colorSet.map((color) => <Col id="calendar-color"><div className={"calendar-color-" + color}><input className="blue" type="radio" onChange={(e) => setCheckedBorderColor(color)} checked={checkedBorderColor === color} /></div></Col>)}
+      </Row></Col>
     </Row>)
   }
   const textColorJSX = (): JSX.Element => {
-    return (<Row>
-      <Col>テキストカラー</Col>
-      {colorSet.map((color) => <Col><input className="blue" type="radio" onClick={(e) => changeBackColor(color)} /></Col>)}
+    return (<Row id="color-set-row">
+      <Col sm={4}>テキストカラー</Col>
+      <Col sm={8}><Row>
+        {colorSet.map((color) => <Col id="calendar-color"><div className={"calendar-color-" + color}><input className="blue" type="radio" onChange={(e) => { setCheckedTextColor(color) }} checked={checkedTextColor === color} /></div></Col>)}
+      </Row></Col>
     </Row>)
   }
   useEffect(() => {
