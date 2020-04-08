@@ -25,6 +25,7 @@ const Header = (history: any) => {
         NavAuthentication = (<Nav className="justify-content-end" activeKey="/home">
             <Nav.Item>
                 <Nav.Link onClick={clickSignOut}>SignOut</Nav.Link>
+                <Nav><Link to="/user">{UID}</Link></Nav>
             </Nav.Item>          
         </Nav>)
     }

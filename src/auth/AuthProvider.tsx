@@ -17,30 +17,37 @@ const AuthVal: IAuthContext = {
       AuthVal.uid = res.user?.uid
       let UID: any = AuthVal.uid
       localStorage.setItem('uid', UID);
+      localStorage.setItem('email', email);
       history.push('/calender');
       console.log(res.user?.uid)
       })
-        .catch(error => {
-          alert(error);
-        });;
+      .catch(error => {
+        localStorage.setItem('uid', "");
+        localStorage.setItem('email', "");
+        alert(error);
+      });;
   },
   signup: async (email: string, password: string, history: any) => {
    await app.auth().createUserWithEmailAndPassword(email, password).then(res => {
       AuthVal.uid = res.user?.uid
      let UID: any = AuthVal.uid
      RegisterUser(UID,email)
-      localStorage.setItem('uid', UID);
+     localStorage.setItem('uid', UID);
+     localStorage.setItem('email', email);
       history.push('/calender');
       console.log(res.user?.uid)
     })
       .catch(error => {
         alert(error);
+        localStorage.setItem('uid', "");
+        localStorage.setItem('email', "");
     });
   },
   signout: async (history: any) => {
     try {      
       await app.auth().signOut();
       localStorage.setItem('uid', "");
+      localStorage.setItem('email', "");
       history.push('/login');
       window.location.reload()
     } catch (error) {

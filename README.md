@@ -20,7 +20,7 @@
 
 1. clone
 2. /.env を作成しそこに、firebase Authenticationに必要な情報を記載
-3. ビルド(npm run buildコマンド) もしくは npm start 
+3. ビルド(npm run buildコマンド) して npm start 
 4. 3の場合,簡易サーバーを立てる(http-serverなど)
 
 ### デプロイ先
@@ -78,8 +78,9 @@ http://118.27.26.186:9000/
 
 ### バグ
 
-- loginの時signinのボタンが表示されない時がある
-  - login時のヘッダの分岐の仕組みを見直す
+- ~~loginの時signinのボタンが表示されない時がある~~
+  - ~~login時のヘッダの分岐の仕組みを見直す~~
+  - →3/25 login済みの時はログイン画面スキップで対応
 - iPad, iPhoneではdialogを使用したモーダルが正しく機能しない
 
 ### 勉強すべき点

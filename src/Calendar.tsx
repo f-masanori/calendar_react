@@ -9,7 +9,7 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import '@fullcalendar/core/main.css';
 import '@fullcalendar/daygrid/main.css';
-import interactionPlugin from '@fullcalendar/interaction';
+import interactionPlugin, { Draggable }  from '@fullcalendar/interaction';
 /* firebase認証 */
 import { app } from './base';
 /* 設定ファイル */
@@ -159,7 +159,7 @@ const Calender = (history: any): JSX.Element => {
     // console.log(selectedEventTitle)
     // console.log(selectedEventID)
     let selectedevent = calendarApi.getEventById(selectedEventID)
-    /* イベントの画面更新 */
+    /* イベントの画面更新(fullcalendarAPI) */
     selectedevent.setProp("title", selectedEventTitle)
     selectedevent.setProp("backgroundColor", checkedBackColor)
     selectedevent.setProp("borderColor", checkedBorderColor)
@@ -167,7 +167,7 @@ const Calender = (history: any): JSX.Element => {
     /* イベントのDB更新 */
     API.EditEvent(selectedEventID, selectedEventTitle, checkedBackColor,checkedBorderColor,checkedTextColor)
     handleClose()
-    /* Reactでのフォームの定石？*/
+    /* 勝手にリロードしない、Reactでのフォームの定石？*/
     event.preventDefault();
   }
   /* Event名　編集Formに使用 */

@@ -192,3 +192,15 @@ dialog[open] {
 .SignInContainer {
   font-family: 'Open Sans',  sans-serif;
 }
+
+/* Todo 画面*/
+.th-today{
+  background-color: rgb(87, 184, 22);
+}
+.deadline-div{
+  background-color: rgba(255, 255, 251, 0.63);
+}
+.deadline-th{
+   background-color: rgb(87, 184, 22);
+  width: 202;
+}
