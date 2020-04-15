@@ -39,6 +39,7 @@ const AuthVal: IAuthContext = {
     })
       .catch(error => {
         alert(error);
+        history.push('/signup');
         localStorage.setItem('uid', "");
         localStorage.setItem('email', "");
     });

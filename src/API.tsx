@@ -61,8 +61,6 @@ export const GetEvents =  (): Promise<any> => {
 
     })
 }
-
-
 /* Event削除 API */
 /* UID と　EventIDに基づいて削除 */
 /* UIDはjwt */
@@ -97,8 +95,6 @@ export const DeleteEvent = (eventID: number) => {
         alert(error)
     });
 }
-
-// export const GetNextEventID =()
 export const GetNextEventID =  ():any => {
     console.log("GetNextEventID!!")
     // let resEventIDxxx:number =999
@@ -156,8 +152,6 @@ export const AddEvent = (_nextEventID: number, date: string | undefined, input: 
     });
     }
 }
-
-
 /* Event編集 API */
 /* UID と　EventIDに基づいて編集 */
 /* UIDはjwt */
@@ -178,6 +172,75 @@ export const EditEvent = (EventID: number, InputEvent: string, BackgroundColor: 
                 BackgroundColor: BackgroundColor,
                 BorderColor: BorderColor,
                 TextColor: TextColor
+            }
+        });
+    }).catch((error: any) => {
+        alert(error)
+    });
+}
+
+/* Todo追加 API */
+/* UID */
+/* UIDはjwt */
+/* res未実装 */
+export const AddTodo = (todoID: number | undefined,todo: string) => {
+    console.log("API:AddTodo!!")
+        app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
+            const res = await axios({
+                method: 'post',
+                url: APIURL + '/addTodo',
+                headers: {
+                    'Content-Type': "application/json",
+                    'Authorization': idToken
+                },
+                data: {
+                    TodoID: String(todoID),
+                    Todo: todo,
+                }
+            });
+        }).catch((error: any) => {
+            alert(error)
+    });
+}
+/* Todo読み込み API */
+/* UID */
+/* UIDはjwt */
+export const GetTodos = (): Promise<any> => {
+    let res: any
+    /* reject処理未実装 */
+    return new Promise(resolve => {
+        app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
+            res = await axios({
+                method: 'get',
+                url: APIURL + '/getTodosByUID',
+                headers: {
+                    'Content-Type': "application/json",
+                    'Authorization': idToken
+                },
+            });
+            resolve(res)
+        }).catch((error: any) => {
+            alert(error)
+        });
+
+    })
+}
+/* Todo削除 API */
+/* UID */
+/* UIDはjwt */
+/* res未実装 */
+export const DeleteTodo = (todoID: number | undefined) => {
+    console.log("API:DeleteTodo!!")
+    app.auth().currentUser?.getIdToken(true).then(async (idToken: any) => {
+        const res = await axios({
+            method: 'post',
+            url: APIURL + '/deleteTodo',
+            headers: {
+                'Content-Type': "application/json",
+                'Authorization': idToken
+            },
+            data: {
+                TodoID: String(todoID),
             }
         });
     }).catch((error: any) => {

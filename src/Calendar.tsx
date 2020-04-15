@@ -221,6 +221,7 @@ const Calender = (history: any): JSX.Element => {
   }
   useEffect(() => {
     console.log("useEffect start")
+    /* カレンダー処理実行中は操作不能にする */
     setLoadingAnimation(<div className="loading-animation">
       <Spinner animation="border" role="status">
         <span className="sr-only"> Loading...</span>
@@ -288,7 +289,7 @@ const Calender = (history: any): JSX.Element => {
           </div>
         </div>
     </dialog>
-    <Modal show={show} onHide={handleClose} >
+      <Modal show={show} onHide={handleClose} centered >
       <Modal.Header closeButton>
         <Modal.Title>Event編集</Modal.Title>
       </Modal.Header>

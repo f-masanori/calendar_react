@@ -32,12 +32,16 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Spinner from 'react-bootstrap/Spinner'
 
+interface ITodo {
+    id: number|undefined;
+    todo: string
+}
+
 const Todo = (history: any): JSX.Element => { 
-    const [inputTodo, setInputTodo] = useState("")
-    const [todos, setTodos] = useState([
-        { name: "do" },
-        { name: "do" }
-    ])
+    const [inputTodo, setInputTodo] = useState<string>("")
+    const [todos, setTodos] = useState<ITodo[]>([])
+    const [nextTodoID, setNextTodoID] = useState<number | undefined>(1)
+
     const [deadLineTodo, setDeadLineTodo] = useState([
         { name: "DNA", deadlineYeay: 2020, deadlineMonth: 4, deadlineDay: 20},
         { name: "ネット", deadlineYeay: 2020, deadlineMonth: 4, deadlineDay: 20 }
@@ -50,31 +54,62 @@ const Todo = (history: any): JSX.Element => {
     }
     const handleSubmitInputTodo = (event: any) => {
         let temptodos = [...todos];
-        temptodos.push({ name: inputTodo })
+        const newTodo: ITodo = { id: nextTodoID, todo: inputTodo };
+        temptodos.push(newTodo)
+        API.AddTodo(nextTodoID,inputTodo)
         setTodos(temptodos)
         setInputTodo("");
+        let _nextTodoID: number | undefined;
+        if (nextTodoID !== undefined) {
+            _nextTodoID = nextTodoID + 1
+        }
+        setNextTodoID(_nextTodoID)
+
         event.preventDefault();
+    }
+    const GetTodos = async () => {
+        console.log("GetTodos!")
+        let res = await API.GetTodos()
+        let todos: ITodo[] = []
+        console.log(res)
+        if (res.data.Todos) {
+            for (let i = 0; i < res.data.Todos.length; i++) {
+                let temp: ITodo = {
+                    id: res.data.Todos[i].ID,
+                    todo: res.data.Todos[i].Todo,
+                }
+                todos.push(temp)
+            }
+            setNextTodoID(res.data.NextTodoID)
+            setTodos(todos)
+        }
+
+    }
+    const deleteTodo = (event: any) => {
+        console.log(event.currentTarget.value); 
+        const result = todos.filter(todo => todo.id !== Number(event.currentTarget.value))
+        console.log(result); 
+        setTodos(result)
+        API.DeleteTodo(event.currentTarget.value)
     }
     const todoTableJSX = (): JSX.Element => { 
         
         return (<Table striped bordered hover variant="dark">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>todoID</th>
                     <th>todo</th>
-                    <th>date</th>
-                    <th>Username</th>
+                    <th>削除</th>
                 </tr>
             </thead>
+            {nextTodoID}
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
                 {todos.map((todo) => {
-                    return <tr><td>{todo.name}</td></tr>;
+                    return <tr>
+                        <td>{todo.id}</td>
+                        <td>{todo.todo}</td>
+                        <td><Button variant="info" value={todo.id} onClick={(e: any) => deleteTodo(e)}>＋</Button></td>
+                    </tr>;
                     })}
             </tbody>
         </Table>)
@@ -138,6 +173,18 @@ const Todo = (history: any): JSX.Element => {
             />
         )
     }
+    useEffect(() => {
+        console.log("useEffect start")
+        app.auth().onAuthStateChanged(user => {
+            if (user) {
+                GetTodos()
+                console.log("ログインしてます")
+            } else {
+                console.log("ログインしてません")
+            }
+        });
+        console.log("useEffect end")
+    }, []);
     return (
         <Container>
             <Form.Group onSubmit={handleSubmitInputTodo}>
