@@ -7,6 +7,7 @@ import { HashRouter as Router, Route, Link } from "react-router-dom";
 import Header from "./Header";
 import Login from "./auth/Login";
 import Signup from "./auth/Signup";
+import WebSocketTest from "./WebSocket";
 import Calender from "./Calendar";
 import ShareCalendar from "./ShareCalendar";
 import User from "./User";
@@ -30,7 +31,8 @@ function App() {
         <p style={{ fontSize: `300%` }}>&nbsp;</p>
         <div>
           <Switch>
-            <Route exact path="/login" component={Login} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/websocket" component={WebSocketTest} />
             <Route exact path="/signup" component={Signup} />
               <PrivateRoute exact path="/calender" component={Calender} />
               <PrivateRoute exact path="/sharecalendar" component={ShareCalendar} />
