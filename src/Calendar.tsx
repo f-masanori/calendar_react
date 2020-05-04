@@ -17,6 +17,7 @@ import APIURL from './Config'
 /* API */
 import * as API from './API' 
 
+import * as Todo from './Todo' 
 /* Bootstrap */
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
@@ -248,27 +249,31 @@ const Calender = (history: any): JSX.Element => {
        {loadingAnimation}
 
         <div >
-          <Container className="divFullCalendar">
-            <h1>カレンダー</h1>
-            <div>
-              <input ref={newEventIDRef} type="text" hidden/>
-            </div>
-            <FullCalendar
-                ref={calendarRef}
-                defaultView="dayGridMonth"
-                plugins={calendarPlugins}
-                events={eventsContext}
-                selectable={true}
-                selectMirror={true}
-                dateClick={(info) => { openModalForAddEvent(info) }}
-                eventClick={(info) => { editEvent(info) }}
+          <div className="divFullCalendar">
+            <Row>
+              <Col sm={9}><div>
+                <input ref={newEventIDRef} type="text" hidden />
+              </div>
+                <FullCalendar
+                  ref={calendarRef}
+                  defaultView="dayGridMonth"
+                  plugins={calendarPlugins}
+                  events={eventsContext}
+                  selectable={true}
+                  selectMirror={true}
+                  dateClick={(info) => { openModalForAddEvent(info) }}
+                  eventClick={(info) => { editEvent(info) }}
                 // navLinks={true}
                 // navLinkDayClick={(date, jsEvent)=> {
                 //   console.log(date)
                 //   handleShow()
                 // }}
-            />
-          </Container>
+                /></Col>
+              <Col sm={3}> {Todo.Todo()}</Col>
+            </Row>
+            
+           
+          </div>
         </div>
       </div>
       <dialog ref={addEventModalRef} onClick={(e) => closeModalForAddEvent()}>

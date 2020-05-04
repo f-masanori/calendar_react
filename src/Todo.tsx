@@ -37,7 +37,7 @@ interface ITodo {
     todo: string
 }
 
-const Todo = (history: any): JSX.Element => { 
+export const Todo = (): JSX.Element => { 
     const [inputTodo, setInputTodo] = useState<string>("")
     const [todos, setTodos] = useState<ITodo[]>([])
     const [nextTodoID, setNextTodoID] = useState<number | undefined>(1)
@@ -124,12 +124,15 @@ const Todo = (history: any): JSX.Element => {
         const deadlineTbodyJSX = (): JSX.Element => {
             const trJSX: JSX.Element[] = []
             for (let todo of deadLineTodo) {
-                trJSX.push(<tr><td>{todo.name}</td>{dayArray.map((day: any) => {
+                trJSX.push(
+                    <tr><td>{todo.name}</td>
+                    {dayArray.map((day: any) => {
                     if (day === today) {
                         return (<td className="th-today">{day}</td>)
                     }
                     return (<td ></td>);
-                })}</tr>)
+                    })}
+                </tr>)
             }
             return (<tbody>
                 {trJSX}
@@ -169,7 +172,6 @@ const Todo = (history: any): JSX.Element => {
             <DatePicker
                 selected={startDate}
                 onChange={handleChange}
-                locale="ja"
             />
         )
     }
