@@ -17,13 +17,20 @@
   - npm : 6.14.2
 
 ### 実行方法
-
 1. clone
-2. /.env を作成しそこに、firebase Authenticationに必要な情報を記載
+2. /.env を作成しそこに、firebase Authenticationに必要な情報を記載(認証にfirebase authenticationを使用しているため、自身のプロジェクトを作成する必要あり。)
+```.env
+REACT_APP_FIREBASE_KEY="xxxxxxxxxxxxxxxxxxx"
+REACT_APP_FIREBASE_DOMAIN="xxxxxxxxxxxxxxxxxx"
+REACT_APP_FIREBASE_DATABASE="xxxxxxxxxxxxxxxxxxx"
+REACT_APP_FIREBASE_PROJECT_ID="xxxxxxxxxxxxxxxxxxx"
+REACT_APP_FIREBASE_STORAGE_BUCKET="xxxxxxxxxxxxxxxxxxx"
+REACT_APP_FIREBASE_SENDER_ID="xxxxxxxxxxxxxxxxxxx"
+```
 3. ビルド(npm run buildコマンド) して npm start 
 4. 3の場合,簡易サーバーを立てる(http-serverなど)
 
-### デプロイ先
+### 現在のデプロイ先
 
 - conohaのVPS
 
