@@ -94,21 +94,21 @@ export const Todo = (): JSX.Element => {
     }
     const todoTableJSX = (): JSX.Element => { 
         
-        return (<Table striped bordered hover variant="dark">
+        return (
+            <Table bordered hover size="sm">
             <thead>
                 <tr>
-                    <th>todoID</th>
+                    {/* <th>todoID</th> */}
                     <th>todo</th>
                     <th>削除</th>
                 </tr>
             </thead>
-            {nextTodoID}
             <tbody>
                 {todos.map((todo) => {
                     return <tr>
-                        <td>{todo.id}</td>
+                        {/* <td>{todo.id}</td> */}
                         <td>{todo.todo}</td>
-                        <td><Button variant="info" value={todo.id} onClick={(e: any) => deleteTodo(e)}>＋</Button></td>
+                        <td><Button variant="danger" size="sm" value={todo.id} onClick={(e: any) => deleteTodo(e)}>×</Button></td>
                     </tr>;
                     })}
             </tbody>
@@ -180,9 +180,9 @@ export const Todo = (): JSX.Element => {
         app.auth().onAuthStateChanged(user => {
             if (user) {
                 GetTodos()
-                console.log("ログインしてます")
+                // console.log("ログインしてます")
             } else {
-                console.log("ログインしてません")
+                // console.log("ログインしてません")
             }
         });
         console.log("useEffect end")
@@ -191,23 +191,23 @@ export const Todo = (): JSX.Element => {
         <Container>
             <Form.Group onSubmit={handleSubmitInputTodo}>
                 <br />
-                <Form.Row>
-                    <Form.Label column lg={2}>
-                        Todo :
-            </Form.Label>
-                    <Col>
-                        <Form.Control type="text" value={inputTodo} onChange={handleChangeInputTodo} />
+                <Row>
+                    <Col md={8}>
+                        <Form.Row>
+                            <Form.Control type="text" size="sm" placeholder="add todo" value={inputTodo} onChange={handleChangeInputTodo} />
+                        </Form.Row></Col>
+                    <Col  md={4}>
+                        <Button variant="primary" onClick={handleSubmitInputTodo} size="sm">
+                            保存
+                        </Button>
                     </Col>
-                </Form.Row>
-                <Button variant="primary" onClick={handleSubmitInputTodo}>
-                    保存
-            </Button>
+                </Row>
             </Form.Group>
            
             {todoTableJSX()}
-            {SimpleDatePicker()}
+            {/* {SimpleDatePicker()}
             <div className="deadline-div">{thisMonth}月
-            {deadlineJSX()}</div>
+            {deadlineJSX()}</div> */}
             
                </Container>
        )

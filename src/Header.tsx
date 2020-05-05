@@ -15,7 +15,9 @@ const Header = (history: any) => {
         signout(history.history)
     }
 
-    let UID: string|null = localStorage.getItem('uid');
+    let UID: string | null = localStorage.getItem('uid');
+    let email: string | null = localStorage.getItem('email');
+    
     let NavAuthentication: JSX.Element;
     if (UID === "") {
         NavAuthentication = (<Nav><Nav><Link to="/login">login</Link></Nav>
@@ -25,7 +27,7 @@ const Header = (history: any) => {
         NavAuthentication = (<Nav className="justify-content-end" activeKey="/home">
             <Nav.Item>
                 <Nav.Link onClick={clickSignOut}>SignOut</Nav.Link>
-                <Nav><Link to="/user">{UID}</Link></Nav>
+                <Nav><Link to="/user">{email}</Link></Nav>
             </Nav.Item>          
         </Nav>)
     }
