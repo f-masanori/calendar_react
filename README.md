@@ -27,7 +27,7 @@ REACT_APP_FIREBASE_PROJECT_ID="xxxxxxxxxxxxxxxxxxx"
 REACT_APP_FIREBASE_STORAGE_BUCKET="xxxxxxxxxxxxxxxxxxx"
 REACT_APP_FIREBASE_SENDER_ID="xxxxxxxxxxxxxxxxxxx"
 ```
-3. ビルド(npm run buildコマンド) して npm start 
+3. ビルド(npm run buildコマンド) 
 4. 3の場合,簡易サーバーを立てる(http-serverなど)
 
 ### 現在のデプロイ先
@@ -41,6 +41,10 @@ http://118.27.26.186:9000/
   - 現在のターミナルで動いているプロセス `$ ps`
   - 動いているプロセス(全て) `$ ps alx`
   - プロセスの終了 `$ kill PID `
+
+### 構成
+
+<img width="712" alt="スクリーンショット 2020-05-11 14 14 28" src="https://user-images.githubusercontent.com/46617611/81526213-f77e1e00-9391-11ea-9bc6-b7d18c416456.png">
 
 ###  認証の実装について
 
@@ -60,7 +64,7 @@ http://118.27.26.186:9000/
 - ~~イベントを削除する機能追加~~
 - ~~ログイン済みの際にログイン画面をスキップしてカレンダー表示~~
   - localstrageでログイン状況を管理
-- イベントの表示の色を好みで変えれるようにしたい
+- ~~イベントの表示の色を好みで変えれるようにしたい~~
 - デザインを工夫したい
   - Bootstrapそのままになってる
 - 安全なサイト(ssl)[デプロイ時]
@@ -77,10 +81,11 @@ http://118.27.26.186:9000/
 
 - なぜReactか
   - Reactはコンポーネント指向なので、再利用性が高い・保守性が高い
+  - 仮装DOMを使用しており、ページの一部を更新するのが速いから
+  - SPAを開発してみたかった
 - なぜTypeScriptか
   - 型チェックがあり、ミスが減る
 - なぜ関数コンポーネントを使うのか
-  - reactの概念に近い
   - 公式も新規開発時には関数コンポーネントを推奨
 
 ### バグ
@@ -128,15 +133,14 @@ _____
 - 外部APIを叩く実装にて、thenの中で処理の続きを書くと少し冗長
   - 外部APIを叩く関数は１まとめにしようと試みたが、非同期処理の勉強不足で失敗
   - async/awaitについて勉強したらできそうな気がしている
-- 自作modalにて、modal外をクリックでCLOSEにしたい
-  - →e.stopPropagation()使用で可能
+- ~~自作modalにて、modal外をクリックでCLOSEにしたい~~
+  - ~~→e.stopPropagation()使用で可能~~
 - Event追加はdateClick(info)をトリガーとして発火する関数内で実装→state使用できない→順に振られるeventIDの管理どうしよう→html inputのvalueにrefを使って管理
-- サインアウトしてログインしなおすとfirebaseのバグ？
-  - サインアウト時にreloadで対応
 - FullCalendarの描画途中にクリックするとエラー
   - →描画中はクリックできないようにする
   -  pointer-events: none;とz-index を使用（css）
-- TSでは独自属性を追加する際に
+- Reduxを使って書き直ししたい！
+  - 現在やっている
 
 ______
 
