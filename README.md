@@ -2,6 +2,8 @@
 
 これはReactとTypescriptの勉強のために開発したカレンダーアプリです。
 
+現在サマーインターンの経験を経て、コードを新しく作り直しています。(https://github.com/f-masanori/calendar_react_replace)
+
 サーバーレスにするか迷ったのですが、以前インターン先で自分が開発していたgolangのアプリ[途中で開発中止になって自分のものになりました]があったので勉強のためそれを[サーバーサイド](https://github.com/f-masanori/calendar_app)にする事にしました。
 
 [[]]画像
